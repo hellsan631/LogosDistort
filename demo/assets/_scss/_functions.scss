@@ -1,0 +1,226 @@
+/* _functions.scss */
+@import "compass";
+@import "compass/support";
+
+@mixin header($element, $size, $color, $letter-spacing, $margin-before-after: 0.5em){
+  #{$element} {
+    -webkit-margin-before: #{$margin-before-after};
+    -webkit-margin-after:  #{$margin-before-after};
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-size: #{$size};
+    color: #{$color};
+    letter-spacing: #{$letter-spacing};
+  }
+}
+
+@mixin materialBounce($element: all, $duration: 600ms){
+  @include transition($element $duration cubic-bezier(0.620, -0.005, 0.260, 0.995));
+}
+
+@mixin linear-gradient($from, $to, $direction: top){
+  @include filter-gradient($from, $to, vertical); // IE6-9
+  @include linear-gradient($direction, $from 0%, $to 100%);
+}
+
+@mixin calc($property, $expression) {
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+  #{$property}: expression(#{$expression});
+}
+
+// keyframes mixin
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+/*
+## Triangle
+* @include triangle within a pseudo element and add positioning properties (ie. top, left)
+* $direction: up, down, left, right
+*/
+@mixin triangle($direction, $size: 8px, $color: #222){
+  content: '';
+  display: block;
+  position: absolute;
+  height: 0; width: 0;
+  @if ($direction == 'up'){
+    border-bottom: $size solid $color;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+  }
+  @else if ($direction == 'down'){
+    border-top: $size solid $color;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+  }
+  @else if ($direction == 'left'){
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+  }
+  @else if ($direction == 'right'){
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+  }
+}
+
+
+/*
+* Currency
+*/
+%currency {
+  position: relative;
+  &:before {
+    content: '$';
+    position: relative;
+    left: 0;
+  }
+}
+
+.USD %currency:before { content: '$'; }
+.EUR %currency:before { content: '\20AC'; } // must escape the html entities for each currency symbol
+.ILS %currency:before { content: '\20AA'; }
+.GBP %currency:before { content: '\00A3'; }
+
+/*
+* Clearfix
+*/
+%clearfix {
+  *zoom: 1;
+  &:after {
+    content: '';
+    display: table;
+    line-height: 0;
+    clear: both;
+  }
+}
+
+.clearfix{
+  @extend %clearfix;
+}
+
+/*
+* Respond To
+* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+*
+* Example:
+* @include respondTo(smartphone){ display: none; }
+*
+*/
+
+$largeScreen: 1940px;
+$desktop: 1680px;
+$laptop: 1280px;
+$tabletLandscape: 1024px;
+$tabletPortrait: 767px;
+
+@mixin respondTo($media) {
+  @if $media == retina {
+    @media (min-width: $largeScreen) { @content; }
+  }
+  @else if $media == desktop {
+    @media (min-width: $desktop) and (max-width: $largeScreen) { @content; }
+  }
+  @else if $media == smallScreen {
+    @media (min-width: $laptop) and (max-width: $desktop) { @content; }
+  }
+  @else if $media == laptop {
+    @media (max-width: $laptop) { @content; }
+  }
+  @else if $media == tablet {
+    @media (min-width: $tabletPortrait) and (max-width: $tabletLandscape) { @content; }
+  }
+  @else if $media == smartphone {
+    @media (max-width: $tabletPortrait) { @content; }
+  }
+
+}
+
+/*
+* Ghost Vertical Align
+*/
+@mixin ghostVerticalAlign($pseudoEl: before){
+  &:#{$pseudoEl} {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%; width: .1px;
+  }
+}
+
+%vertical-align {
+  @include ghostVerticalAlign();
+}
+
+/*
+* Truncate Text
+*/
+@mixin truncateText($overflow: ellipsis){
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: $overflow; // values are: clip, ellipsis, or a string
+}
+
+/*
+* Animation
+*/
+@mixin animation($name, $duration: 1000ms, $iterations: infinite, $timing-function: ease, $delay: 0ms) {
+  // There is a FF bug that requires all time values to have units, even 0 !!!!!!
+  -webkit-animation: $name $duration $iterations $timing-function $delay;
+  -moz-animation: $name $duration $iterations $timing-function $delay;
+  -o-animation: $name $duration $iterations $timing-function $delay;
+  animation: $name $duration $iterations $timing-function $delay;
+}
+
+
+/*
+* Alerted
+*/
+@include keyframes(alertMe) {
+  from {
+    border-width: 3px;
+    border-color: gold;
+  }
+  to {
+    border-width: 0;
+    border-color: rgba(gold, .1);
+  }
+}
+
+@mixin alerted() {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 6px; right: 6px;
+    height: 8px; width: 8px;
+    border-radius: 10px;
+    background-color: gold;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    height: 20px; width: 20px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: solid gold;
+    border-width: 2px; // animates
+    box-sizing: border-box;
+    @include animation($name: alertMe);
+  }
+}

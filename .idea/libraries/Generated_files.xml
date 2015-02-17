@@ -1,0 +1,45 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/test/test_helper.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/src/whet.extend.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/completion.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/shell.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/index.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/expected/maps/coffeeBareJoin.src.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/fixtures/coffee1.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/cmd.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/test/extend_test.js" />
+        <item url="file://$PROJECT_DIR$/src/logosDistort.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/vinyl-fs/node_modules/glob-watcher/test/fixtures/test.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/arg.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/opt.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/fixtures/coffee2.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/expected/maps/coffeeJoin.src.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/color.js" />
+        <item url="file://$PROJECT_DIR$/Gruntfile.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/test/test_helper.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/src/whet.extend.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/completion.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/shell.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/index.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/expected/maps/coffeeBareJoin.src.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/fixtures/coffee1.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/cmd.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/whet.extend/test/extend_test.js" />
+      <root url="file://$PROJECT_DIR$/src/logosDistort.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/vinyl-fs/node_modules/glob-watcher/test/fixtures/test.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/arg.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/opt.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/fixtures/coffee2.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-coffee/test/expected/maps/coffeeJoin.src.js" />
+      <root url="file://$PROJECT_DIR$/Gruntfile.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/grunt-contrib-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/coa/src/color.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

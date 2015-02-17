@@ -1,0 +1,123 @@
+/* default.scss */
+HTML{
+  margin:0;
+  padding:0;
+}
+
+BODY {
+  font-family: 'Open Sans', sans-serif;
+  font-weight:400;
+  font-size: 100%;
+  line-height: 1.2em;
+  color: #313131;
+  margin:0;
+  padding:0;
+
+  @include respondTo(retina) { font-size: 125%; }
+  @include respondTo(desktop) { font-size: 105%; }
+  @include respondTo(smallScreen) { font-size: 95%; }
+  @include respondTo(laptop) { font-size: 85%; }
+  @include respondTo(tablet) { font-size: 75%; }
+  @include respondTo(smartphone) { font-size: 65%; }
+}
+
+DIV	{
+  margin:0;
+  padding:0;
+}
+
+A	{
+  color: inherit;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-overflow-scrolling: touch;
+  /* -webkit-transform: translateZ(0); */
+  -webkit-touch-callout: none;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Open Sans', sans-serif;
+  //text-transform:uppercase;
+  font-weight:300;
+  padding:0;
+  margin:0;
+  display: block;
+  line-height:1em;
+  @include text-shadow(#000 0px 2px 10px);
+}
+
+@include header(body h1, 3.2em, #fff, 1px);
+@include header(body h2, 2.8em, #fff, 1px);
+@include header(body h3, 2.4em, #fff, 0px);
+@include header(body h4, 2.0em, #fff, 0px);
+@include header(body h5, 1.6em, #fff, 0px);
+@include header(body h6, 1.2em, #fff, 0px);
+
+p {
+  max-width:80em;
+}
+
+.float-right{
+  float:right;
+}
+
+.float-left{
+  float:left;
+}
+
+.aligncenter{
+  text-align: center;
+}
+
+.alignright{
+  text-align: right;
+}
+
+.alignleft{
+  text-align: left;
+}
+
+input[type="text"], input[type="password"]{
+  padding:10px 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight:400;
+  border: 1px solid #ACACAC;
+  border-radius: 3px;
+}
+
+label{
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 26px;
+  font-weight:400;
+  vertical-align: top;
+}
+
+select{
+  padding:8px 15px;
+  border: 2px solid #222;
+  border-radius: 3px;
+}
+
+select, option{
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight:400;
+}
+
+option{
+  padding:5px 10px;
+}

@@ -1,0 +1,34 @@
+{
+	"name": "logosDistort",
+	"title": "jQuery Logos Perspective Distortion",
+	"description": "A simple jQuery plugin that uses matrix3d to perform perspective distortions. Inspired by http://hellomonday.com/",
+	"keywords": [
+		"jquery",
+		"matrix3d",
+        "parallax",
+        "perspective",
+        "distortion",
+		"plugins"
+	],
+	"version": "0.1.0",
+	"author": {
+		"name": "Mathew Kleppin",
+		"email": "mathew.kleppin@gmail.com",
+		"url": "https://github.com/hellsan631/"
+	},
+	"maintainers": [
+		{
+            "name": "Mathew Kleppin",
+            "email": "mathew.kleppin@gmail.com",
+            "url": "https://github.com/hellsan631/"
+		}
+	],
+	"licenses": [
+		{
+			"type": "GPLv3"
+		}
+	],
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logos Perspective Distortion Demo 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/perspectiveRules.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="demo1">
+    <img alt="background" src="assets/images/background.png" />
+    <div id="particle-target" ></div>
+    <img alt="logo" src="assets/images/logo.png" />
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="assets/js/logosDistort.min.js"></script>
+<script src="assets/js/jquery.particleground.min.js"></script>
+<script>
+    var particles = true;
+
+    $(document).ready(function() {
+
+        $("#demo1").logosDistort();
+
+        var particleDensity;
+
+        if (particles) {
+            particleDensity = window.innerWidth * 7.5;
+            if (particleDensity < 12000) {
+                particleDensity = 12000;
+            } else if (particleDensity > 18000) {
+                particleDensity = 18000;
+            }
+            return $('#particle-target').particleground({
+                dotColor: '#1ec5ee',
+                lineColor: '#0a4e90',
+                density: particleDensity.toFixed(0),
+                parallax: false
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

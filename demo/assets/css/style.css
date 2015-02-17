@@ -1,0 +1,321 @@
+/* _functions.scss */
+/*
+## Triangle
+* @include triangle within a pseudo element and add positioning properties (ie. top, left)
+* $direction: up, down, left, right
+*/
+/*
+* Currency
+*/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
+/*
+* Clearfix
+*/
+/* line 103, ../_scss/_functions.scss */
+.clearfix {
+  *zoom: 1;
+}
+/* line 105, ../_scss/_functions.scss */
+.clearfix:after {
+  content: '';
+  display: table;
+  line-height: 0;
+  clear: both;
+}
+
+/*
+* Respond To
+* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+*
+* Example:
+* @include respondTo(smartphone){ display: none; }
+*
+*/
+/*
+* Ghost Vertical Align
+*/
+/*
+* Truncate Text
+*/
+/*
+* Animation
+*/
+/*
+* Alerted
+*/
+@-webkit-keyframes alertMe {
+  from {
+    border-width: 3px;
+    border-color: gold;
+  }
+  to {
+    border-width: 0;
+    border-color: rgba(255, 215, 0, 0.1);
+  }
+}
+@-moz-keyframes alertMe {
+  from {
+    border-width: 3px;
+    border-color: gold;
+  }
+  to {
+    border-width: 0;
+    border-color: rgba(255, 215, 0, 0.1);
+  }
+}
+@-ms-keyframes alertMe {
+  from {
+    border-width: 3px;
+    border-color: gold;
+  }
+  to {
+    border-width: 0;
+    border-color: rgba(255, 215, 0, 0.1);
+  }
+}
+@keyframes alertMe {
+  from {
+    border-width: 3px;
+    border-color: gold;
+  }
+  to {
+    border-width: 0;
+    border-color: rgba(255, 215, 0, 0.1);
+  }
+}
+/* default.scss */
+/* line 2, ../_scss/_default.scss */
+HTML {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 7, ../_scss/_default.scss */
+BODY {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 100%;
+  line-height: 1.2em;
+  color: #313131;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 1940px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 125%;
+  }
+}
+@media (min-width: 1680px) and (max-width: 1940px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 105%;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1680px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 95%;
+  }
+}
+@media (max-width: 1280px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 85%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 75%;
+  }
+}
+@media (max-width: 767px) {
+  /* line 7, ../_scss/_default.scss */
+  BODY {
+    font-size: 65%;
+  }
+}
+
+/* line 24, ../_scss/_default.scss */
+DIV {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 29, ../_scss/_default.scss */
+A {
+  color: inherit;
+}
+
+/* line 33, ../_scss/_default.scss */
+* {
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  /* -webkit-transform: translateZ(0); */
+  -webkit-touch-callout: none;
+}
+
+/* line 48, ../_scss/_default.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+  display: block;
+  line-height: 1em;
+  text-shadow: #000 0px 2px 10px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h1 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 3.2em;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h2 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 2.8em;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h3 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 2.4em;
+  color: #fff;
+  letter-spacing: 0px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h4 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 2em;
+  color: #fff;
+  letter-spacing: 0px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h5 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 1.6em;
+  color: #fff;
+  letter-spacing: 0px;
+}
+
+/* line 6, ../_scss/_functions.scss */
+body h6 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size: 1.2em;
+  color: #fff;
+  letter-spacing: 0px;
+}
+
+/* line 66, ../_scss/_default.scss */
+p {
+  max-width: 80em;
+}
+
+/* line 70, ../_scss/_default.scss */
+.float-right {
+  float: right;
+}
+
+/* line 74, ../_scss/_default.scss */
+.float-left {
+  float: left;
+}
+
+/* line 78, ../_scss/_default.scss */
+.aligncenter {
+  text-align: center;
+}
+
+/* line 82, ../_scss/_default.scss */
+.alignright {
+  text-align: right;
+}
+
+/* line 86, ../_scss/_default.scss */
+.alignleft {
+  text-align: left;
+}
+
+/* line 90, ../_scss/_default.scss */
+input[type="text"], input[type="password"] {
+  padding: 10px 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 400;
+  border: 1px solid #ACACAC;
+  border-radius: 3px;
+}
+
+/* line 100, ../_scss/_default.scss */
+label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 26px;
+  font-weight: 400;
+  vertical-align: top;
+}
+
+/* line 108, ../_scss/_default.scss */
+select {
+  padding: 8px 15px;
+  border: 2px solid #222;
+  border-radius: 3px;
+}
+
+/* line 114, ../_scss/_default.scss */
+select, option {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+/* line 121, ../_scss/_default.scss */
+option {
+  padding: 5px 10px;
+}
+
+/* _fonts.scss */
+/* line 5, ../_scss/style.scss */
+#particle-target {
+  position: absolute;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=style.css.map */
