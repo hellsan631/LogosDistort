@@ -11,8 +11,11 @@
 <div id="demo3">
     <img alt="background" src="assets/images/space.jpg" />
     <img alt="space2" src="assets/images/space2.png" />
+    <div></div>
     <img alt="asteroids" src="assets/images/asteroids.png" />
     <img alt="planet" src="assets/images/planet.png" />
+    <div></div>
+    <div></div>
     <div></div>
     <div></div>
     <img alt="ui" src="assets/images/cockpit.png" />
@@ -23,10 +26,11 @@
 <script src="assets/js/jquery.particleground.min.js"></script>
 <script>
     var options = {
-        effectWeight: 0.7,
+        effectWeight: 1.5,
         outerBuffer: 1.30,
-        elementDepth: 200,
-        smoothingMultiplier: 2
+        elementDepth: 100,
+        smoothingMultiplier: 1.5,
+        directions: [ 1, 1, -1, 1, 1, 1, 1, 1 ]
     };
     $("#demo3").logosDistort(options);
 </script>

@@ -10,6 +10,12 @@ do ($ = jQuery, window, document) ->
     activeOnlyInside: false
     outerBuffer: 1.10           #the outside buffer of the effect
     elementDepth: 140
+    directions: [
+      1
+      1
+      1, 1, -1
+      -1, 1, 1
+    ]
     weights: [
       0.0000310   #distance from center
       0.0001800   #y plane neg to left, pos to right -> rotational
@@ -105,7 +111,7 @@ do ($ = jQuery, window, document) ->
       if @objects3d.length > 4
         dIndex = dIndex-(@objects3d.length/2)
 
-      depth = (dIndex)*@settings.elementDepth
+      depth = dIndex*@settings.elementDepth
 
       aspectDevice = @getAspectRatio()
       aspectElement = @getAspectRatio ele
@@ -164,19 +170,19 @@ do ($ = jQuery, window, document) ->
       requestAnimationFrame () -> $(element).attr 'style', (logos.calculateTransform appliedX, appliedY)
 
     calculateTransform: (appliedX, appliedY) ->
-      transform1 = 1 - (@applyTransform (@getDistanceFromCenter appliedX, appliedY), 0)*@settings.effectWeight
-      transform2 = (@applyTransform (@getDistanceFromCenterY appliedX), 1)*@settings.effectWeight
-      transform3 = (@applyTransform (@getDistanceFromEdgeCenterAndCenter appliedX, appliedY), 2)*@settings.effectWeight
-      transform4 = 1 - (@applyTransform (@getDistanceFromCenter appliedX, appliedY), 3)*@settings.effectWeight
-      transform5 = -(@applyTransform (@getDistanceFromCenterX appliedY), 4)*@settings.effectWeight
-      transform6 = -transform2
-      transform7 = transform5
-      transform8 = Math.abs transform4
+      transform1 = (@settings.directions[0]*(1 - (@applyTransform (@getDistanceFromCenter appliedX, appliedY), 0)*@settings.effectWeight)).toFixed(5)
+      transform2 = (@settings.directions[1]*(@applyTransform (@getDistanceFromCenterY appliedX), 1)*@settings.effectWeight).toFixed(5)
+      transform3 = (@settings.directions[2]*(@applyTransform (@getDistanceFromEdgeCenterAndCenter appliedX, appliedY), 2)*@settings.effectWeight).toFixed(5)
+      transform4 = (@settings.directions[3]*(1 - (@applyTransform (@getDistanceFromCenter appliedX, appliedY), 3)*@settings.effectWeight)).toFixed(5)
+      transform5 = (@settings.directions[4]*(@applyTransform (@getDistanceFromCenterX appliedY), 4)*@settings.effectWeight).toFixed(5)
+      transform6 = (@settings.directions[5]*transform2).toFixed(5)
+      transform7 = (@settings.directions[6]*transform5).toFixed(5)
+      transform8 = (@settings.directions[7]*(Math.abs transform4)).toFixed(5)
       "transform: matrix3d(#{transform1}, 0, #{transform2}, 0, #{transform3}, #{transform4}, #{transform5},
           0, #{transform6}, #{transform7}, #{transform8}, 0, 0, 0, 100, 1)"
 
     applyTransform: (distance, effect) =>
-      (distance*@settings.weights[effect]).toFixed(5)
+      distance*@settings.weights[effect]
 
     ##Get MATHS functions
     getDistanceFromCenter: (appliedX, appliedY) ->

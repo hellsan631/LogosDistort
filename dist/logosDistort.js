@@ -13,6 +13,7 @@
       activeOnlyInside: false,
       outerBuffer: 1.10,
       elementDepth: 140,
+      directions: [1, 1, 1, 1, -1, -1, 1, 1],
       weights: [0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200],
       container: window,
       cssClasses: {
@@ -185,19 +186,19 @@
 
       Plugin.prototype.calculateTransform = function(appliedX, appliedY) {
         var transform1, transform2, transform3, transform4, transform5, transform6, transform7, transform8;
-        transform1 = 1 - (this.applyTransform(this.getDistanceFromCenter(appliedX, appliedY), 0)) * this.settings.effectWeight;
-        transform2 = (this.applyTransform(this.getDistanceFromCenterY(appliedX), 1)) * this.settings.effectWeight;
-        transform3 = (this.applyTransform(this.getDistanceFromEdgeCenterAndCenter(appliedX, appliedY), 2)) * this.settings.effectWeight;
-        transform4 = 1 - (this.applyTransform(this.getDistanceFromCenter(appliedX, appliedY), 3)) * this.settings.effectWeight;
-        transform5 = -(this.applyTransform(this.getDistanceFromCenterX(appliedY), 4)) * this.settings.effectWeight;
-        transform6 = -transform2;
-        transform7 = transform5;
-        transform8 = Math.abs(transform4);
+        transform1 = (this.settings.directions[0] * (1 - (this.applyTransform(this.getDistanceFromCenter(appliedX, appliedY), 0)) * this.settings.effectWeight)).toFixed(5);
+        transform2 = (this.settings.directions[1] * (this.applyTransform(this.getDistanceFromCenterY(appliedX), 1)) * this.settings.effectWeight).toFixed(5);
+        transform3 = (this.settings.directions[2] * (this.applyTransform(this.getDistanceFromEdgeCenterAndCenter(appliedX, appliedY), 2)) * this.settings.effectWeight).toFixed(5);
+        transform4 = (this.settings.directions[3] * (1 - (this.applyTransform(this.getDistanceFromCenter(appliedX, appliedY), 3)) * this.settings.effectWeight)).toFixed(5);
+        transform5 = (this.settings.directions[4] * (this.applyTransform(this.getDistanceFromCenterX(appliedY), 4)) * this.settings.effectWeight).toFixed(5);
+        transform6 = (this.settings.directions[5] * transform2).toFixed(5);
+        transform7 = (this.settings.directions[6] * transform5).toFixed(5);
+        transform8 = (this.settings.directions[7] * (Math.abs(transform4))).toFixed(5);
         return "transform: matrix3d(" + transform1 + ", 0, " + transform2 + ", 0, " + transform3 + ", " + transform4 + ", " + transform5 + ",          0, " + transform6 + ", " + transform7 + ", " + transform8 + ", 0, 0, 0, 100, 1)";
       };
 
       Plugin.prototype.applyTransform = function(distance, effect) {
-        return (distance * this.settings.weights[effect]).toFixed(5);
+        return distance * this.settings.weights[effect];
       };
 
       Plugin.prototype.getDistanceFromCenter = function(appliedX, appliedY) {
