@@ -61,6 +61,7 @@ do ($ = jQuery, window, document) ->
 
     init: ->
       @createEnvironment()
+      @settings.onInit()
       logos = @
 
       $(document).on 'mousemove', (e) ->

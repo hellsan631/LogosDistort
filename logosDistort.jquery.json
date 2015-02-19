@@ -5,6 +5,8 @@
 	"keywords": [
 		"jquery",
 		"matrix3d",
+        "3d",
+        "effects",
         "parallax",
         "perspective",
         "distortion",
@@ -25,7 +27,7 @@
 	],
 	"licenses": [
 		{
-			"type": "GPLv3"
+			"type": "MIT"
 		}
 	],
 	"dependencies": {

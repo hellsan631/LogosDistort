@@ -24,7 +24,7 @@
             sourceMap: true
           },
           files: {
-            'dist/logosDistort.js': 'src/logosDistort.coffee'
+            'dist/jquery.logosDistort.js': 'src/jquery.logosDistort.coffee'
           }
         }
       },

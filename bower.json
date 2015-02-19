@@ -1,18 +1,21 @@
 {
-	"name": "jquery-boilerplate",
-	"version": "3.4.0",
-	"homepage": "http://jqueryboilerplate.com",
+	"name": "LogosDistort",
+	"version": "0.1.0",
+	"homepage": "https://github.com/hellsan631/LogosDistort",
 	"authors": [
-		"Zeno Rocha <hi@zenorocha.com>"
+		"Mathew Kleppin <mathew.kleppin@gmail.com>"
 	],
-	"description": "A jump-start for jQuery plugins development.",
-	"main": "src/jquery.boilerplate.js",
-	"keywords": [
-		"jquery",
-		"plugin",
-		"boilerplate",
-		"jquery-plugin",
-		"jquery-boilerplate"
-	],
+	"description": "A simple jQuery plugin that uses matrix3d to perform perspective distortions.",
+	"main": "src/jquery.logosDistort.js",
+    "keywords": [
+        "jquery",
+        "matrix3d",
+        "3d",
+        "effects",
+        "parallax",
+        "perspective",
+        "distortion",
+        "plugins"
+    ],
 	"license": "MIT"
 }

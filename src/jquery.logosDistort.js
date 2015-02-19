@@ -54,6 +54,7 @@
       Plugin.prototype.init = function() {
         var logos;
         this.createEnvironment();
+        this.settings.onInit();
         logos = this;
         $(document).on('mousemove', function(e) {
           logos.mouseX = e.pageX;
@@ -363,4 +364,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=logosDistort.js.map
+//# sourceMappingURL=jquery.logosDistort.js.map

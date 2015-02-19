@@ -15,23 +15,27 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="assets/js/logosDistort.min.js"></script>
+<script src="assets/js/jquery.logosDistort.min.js"></script>
 <script src="assets/js/jquery.particleground.min.js"></script>
 <script>
-    var particles = true;
+    var particles = true,
+        particleDensity,
+        options = {
+            effectWeight: 1,
+            outerBuffer: 1.08,
+            elementDepth: 220
+        };
 
     $(document).ready(function() {
 
-        $("#demo1").logosDistort();
-
-        var particleDensity;
+        $("#demo1").logosDistort(options);
 
         if (particles) {
-            particleDensity = window.innerWidth * 7.5;
-            if (particleDensity < 12000) {
-                particleDensity = 12000;
-            } else if (particleDensity > 18000) {
-                particleDensity = 18000;
+            particleDensity = window.outerWidth * 7.5;
+            if (particleDensity < 13000) {
+                particleDensity = 13000;
+            } else if (particleDensity > 20000) {
+                particleDensity = 20000;
             }
             return $('#particle-target').particleground({
                 dotColor: '#1ec5ee',
