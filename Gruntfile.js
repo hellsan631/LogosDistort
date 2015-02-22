@@ -43,20 +43,14 @@
         build: {
           options: {
             mangle: true,
-            sourceMap: true,
+            sourceMap: false,
             compress: {
               drop_console: true
             }
           },
-          files: [
-            {
-              expand: true,
-              cwd: 'src/',
-              src: ['*.js', '!*.min.js'],
-              dest: 'dist/',
-              ext: '.min.js'
-            }
-          ]
+          files: {
+            'dist/jquery.logosDistort.min.js': 'src/jquery.logosDistort.js'
+          }
         }
       },
       cssmin: {
@@ -72,7 +66,7 @@
             {
               expand: true,
               cwd: 'demo/assets/css',
-              src: ['*.css', '!*.min.css'],
+              src: ['*.css', '!*.min.css', '!style.css'],
               dest: 'dist/css',
               ext: '.min.css'
             }
@@ -85,7 +79,7 @@
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    return grunt.registerTask('build', ['imagemin:build', 'coffee:build', 'compass:build', 'uglify:build', 'cssmin:build']);
+    return grunt.registerTask('build', ['coffee:build', 'compass:build', 'uglify:build', 'cssmin:build']);
   };
 
 }).call(this);

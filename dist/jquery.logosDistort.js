@@ -1,4 +1,4 @@
-//@ sourceMappingURL=logosDistort.map
+//@ sourceMappingURL=jquery.logosDistort.map
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -54,6 +54,7 @@
       Plugin.prototype.init = function() {
         var logos;
         this.createEnvironment();
+        this.settings.onInit();
         logos = this;
         $(document).on('mousemove', function(e) {
           logos.mouseX = e.pageX;
@@ -73,13 +74,18 @@
       };
 
       Plugin.prototype.createEnvironment = function() {
-        var child, parent3d, _i, _len, _ref;
+        var child, parent3d, _i, _j, _len, _len1, _ref, _ref1;
         this.objects3d = this.$el.children();
         this.$el.html("");
         _ref = this.objects3d;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           child = _ref[_i];
           $(child).addClass("" + this.settings.cssClasses.object3d);
+        }
+        _ref1 = this.objects3d;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          child = _ref1[_j];
+          this.setImageDefaults($(child));
         }
         this.outerConParent = $("<div class='" + this.settings.cssClasses.smartContainer + "'></div>");
         this.outerCon = $("<div class='" + this.settings.cssClasses.overlapContainer + "'></div>");
@@ -88,6 +94,19 @@
         this.$el.append(this.outerConParent.append(this.outerCon.append(parent3d.append(this.transformTarget.append(this.objects3d)))));
         this.calculateOuterContainer();
         return this.calculate3dObjects();
+      };
+
+      Plugin.prototype.setImageDefaults = function(element) {
+        var imageLoad;
+        if (element.is("img")) {
+          imageLoad = $("<img />");
+          imageLoad.attr("src", (element.attr("src")) + "?" + new Date().getTime());
+          imageLoad.unbind("load");
+          return imageLoad.bind("load", function() {
+            element.attr("width", this.width);
+            return element.attr("height", this.height);
+          });
+        }
       };
 
       Plugin.prototype.calculateOuterContainer = function() {
@@ -123,7 +142,7 @@
         depth = dIndex * this.settings.elementDepth;
         aspectDevice = this.getAspectRatio();
         aspectElement = this.getAspectRatio(ele);
-        if (isNaN(aspectElement[0])) {
+        if ((isNaN(aspectElement[0])) || ele.is("div")) {
           aspect = aspectDevice;
         } else {
           aspect = aspectElement;

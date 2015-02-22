@@ -38,16 +38,11 @@ module.exports = (grunt)->
       build:
         options:
           mangle: true
-          sourceMap: true
+          sourceMap: false
           compress:
             drop_console: true
-        files: [
-          expand: true
-          cwd: 'src/'
-          src: ['*.js', '!*.min.js']
-          dest: 'dist/'
-          ext: '.min.js'
-        ]
+        files:
+          'dist/jquery.logosDistort.min.js': 'src/jquery.logosDistort.js'
 
     cssmin:
       build:
@@ -60,7 +55,7 @@ module.exports = (grunt)->
         files: [
           expand: true
           cwd: 'demo/assets/css'
-          src: ['*.css', '!*.min.css']
+          src: ['*.css', '!*.min.css', '!style.css']
           dest: 'dist/css'
           ext: '.min.css'
         ]
@@ -80,7 +75,6 @@ module.exports = (grunt)->
   ############################################################
 
   grunt.registerTask('build', [
-    'imagemin:build' # public
     'coffee:build' # tmp
     'compass:build' # tmp
     'uglify:build' # public

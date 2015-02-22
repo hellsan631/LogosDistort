@@ -82,6 +82,7 @@ do ($ = jQuery, window, document) ->
       @$el.html ""
 
       $(child).addClass "#{@settings.cssClasses.object3d}" for child in @objects3d
+      @setImageDefaults $(child) for child in @objects3d
 
       @outerConParent = $("<div class='#{@settings.cssClasses.smartContainer}'></div>")
       @outerCon = $("<div class='#{@settings.cssClasses.overlapContainer}'></div>")
@@ -91,6 +92,15 @@ do ($ = jQuery, window, document) ->
       @$el.append @outerConParent.append @outerCon.append parent3d.append @transformTarget.append @objects3d
       @calculateOuterContainer()
       @calculate3dObjects()
+
+    setImageDefaults: (element) ->
+      if element.is "img"
+        imageLoad = $("<img />")
+        imageLoad.attr "src", (element.attr "src") + "?" + new Date().getTime()
+        imageLoad.unbind "load"
+        imageLoad.bind "load", () ->
+          element.attr "width", @.width
+          element.attr "height", @.height
 
     calculateOuterContainer: ->
       width = @outerConParent.innerWidth()*@settings.outerBuffer
@@ -117,7 +127,7 @@ do ($ = jQuery, window, document) ->
       aspectDevice = @getAspectRatio()
       aspectElement = @getAspectRatio ele
 
-      if isNaN aspectElement[0]
+      if (isNaN aspectElement[0]) or ele.is "div"
         aspect = aspectDevice
       else
         aspect = aspectElement
