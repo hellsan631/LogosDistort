@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
 /* _functions.scss */
 /*
 ## Triangle
@@ -7,7 +8,6 @@
 /*
 * Currency
 */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
 /*
 * Clearfix
 */
@@ -44,45 +44,61 @@
 * Alerted
 */
 @-webkit-keyframes alertMe {
+  /* line 195, ../_scss/_functions.scss */
   from {
     border-width: 3px;
     border-color: gold;
   }
+
+  /* line 199, ../_scss/_functions.scss */
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
+
 @-moz-keyframes alertMe {
+  /* line 195, ../_scss/_functions.scss */
   from {
     border-width: 3px;
     border-color: gold;
   }
+
+  /* line 199, ../_scss/_functions.scss */
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
+
 @-ms-keyframes alertMe {
+  /* line 195, ../_scss/_functions.scss */
   from {
     border-width: 3px;
     border-color: gold;
   }
+
+  /* line 199, ../_scss/_functions.scss */
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
+
 @keyframes alertMe {
+  /* line 195, ../_scss/_functions.scss */
   from {
     border-width: 3px;
     border-color: gold;
   }
+
+  /* line 199, ../_scss/_functions.scss */
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
+
 /* default.scss */
 /* line 2, ../_scss/_default.scss */
 HTML {
@@ -158,7 +174,7 @@ A {
   margin: 0;
   padding: 0;
   -webkit-user-drag: none;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-overflow-scrolling: touch;
   /* -webkit-transform: translateZ(0); */
   -webkit-touch-callout: none;
@@ -172,7 +188,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   display: block;
   line-height: 1em;
-  text-shadow: #000 0px 2px 10px;
+  text-shadow: black 0px 2px 10px;
 }
 
 /* line 6, ../_scss/_functions.scss */
@@ -182,7 +198,7 @@ body h1 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 3.2em;
-  color: #fff;
+  color: white;
   letter-spacing: 1px;
 }
 
@@ -193,7 +209,7 @@ body h2 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 2.8em;
-  color: #fff;
+  color: white;
   letter-spacing: 1px;
 }
 
@@ -204,7 +220,7 @@ body h3 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 2.4em;
-  color: #fff;
+  color: white;
   letter-spacing: 0px;
 }
 
@@ -215,7 +231,7 @@ body h4 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 2em;
-  color: #fff;
+  color: white;
   letter-spacing: 0px;
 }
 
@@ -226,7 +242,7 @@ body h5 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 1.6em;
-  color: #fff;
+  color: white;
   letter-spacing: 0px;
 }
 
@@ -237,7 +253,7 @@ body h6 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   font-size: 1.2em;
-  color: #fff;
+  color: white;
   letter-spacing: 0px;
 }
 
@@ -313,9 +329,59 @@ option {
 
 /* _fonts.scss */
 /* line 5, ../_scss/style.scss */
+body {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* line 10, ../_scss/style.scss */
 #particle-target {
   position: absolute;
   overflow: hidden;
 }
 
-/*# sourceMappingURL=style.css.map */
+/* line 15, ../_scss/style.scss */
+#demo-menu {
+  position: absolute;
+  right: -400px;
+  top: 2em;
+  width: auto;
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.8);
+  height: auto;
+  display: inline-block;
+  z-index: 20;
+}
+
+/* line 27, ../_scss/style.scss */
+#min-max-tag {
+  position: absolute;
+  right: 0;
+  top: 2em;
+  width: auto;
+  padding: 0.4em;
+  font-size: 200%;
+  line-height: 1em;
+  background: rgba(255, 255, 255, 0.4);
+  color: rgba(34, 34, 34, 0.6);
+  height: auto;
+  display: inline-block;
+  z-index: 20;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0em;
+  border-bottom-right-radius: 0em;
+  border-bottom-left-radius: 0.5em;
+  cursor: pointer;
+  -webkit-transition: all 200ms cubic-bezier(0.62, -0.005, 0.26, 0.995);
+  -moz-transition: all 200ms cubic-bezier(0.62, -0.005, 0.26, 0.995);
+  -o-transition: all 200ms cubic-bezier(0.62, -0.005, 0.26, 0.995);
+  transition: all 200ms cubic-bezier(0.62, -0.005, 0.26, 0.995);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) -0.2em 0em 2em;
+  -moz-box-shadow: rgba(0, 0, 0, 0.75) -0.2em 0em 2em;
+  box-shadow: rgba(0, 0, 0, 0.75) -0.2em 0em 2em;
+}
+/* line 50, ../_scss/style.scss */
+#min-max-tag:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(34, 34, 34, 0.8);
+}
