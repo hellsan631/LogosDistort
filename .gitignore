@@ -10,6 +10,9 @@ node_modules
 npm-debug.log
 build
 
+#Bower Components
+bower_components
+
 #Grunt Related
 .sass-cache
 
