@@ -6,17 +6,6 @@ module.exports = (grunt)->
 
   grunt.initConfig
 
-    imagemin:
-      build:
-        options:
-          optimizationLevel: 3
-        files: [
-          expand: true
-          cwd: 'demo/assets/images'
-          src: ['**/*.{png,jpg,gif}']
-          dest: 'demo/assets/images'
-        ]
-
     coffee:
       build:
         options:
@@ -38,7 +27,7 @@ module.exports = (grunt)->
       build:
         options:
           mangle: true
-          sourceMap: false
+          sourceMap: true
           compress:
             drop_console: true
         files:
@@ -67,7 +56,6 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-compass')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
-  grunt.loadNpmTasks('grunt-contrib-imagemin')
   grunt.loadNpmTasks('grunt-contrib-uglify')
 
   ############################################################

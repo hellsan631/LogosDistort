@@ -74,18 +74,13 @@
       };
 
       Plugin.prototype.createEnvironment = function() {
-        var child, parent3d, _i, _j, _len, _len1, _ref, _ref1;
+        var child, parent3d, _i, _len, _ref;
         this.objects3d = this.$el.children();
         this.$el.html("");
         _ref = this.objects3d;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           child = _ref[_i];
           $(child).addClass("" + this.settings.cssClasses.object3d);
-        }
-        _ref1 = this.objects3d;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          child = _ref1[_j];
-          this.setImageDefaults($(child));
         }
         this.outerConParent = $("<div class='" + this.settings.cssClasses.smartContainer + "'></div>");
         this.outerCon = $("<div class='" + this.settings.cssClasses.overlapContainer + "'></div>");
@@ -97,15 +92,19 @@
       };
 
       Plugin.prototype.setImageDefaults = function(element) {
-        var imageLoad;
+        var imageLoad, logos;
+        logos = this;
         if (element.is("img")) {
           imageLoad = $("<img />");
           imageLoad.attr("src", (element.attr("src")) + "?" + new Date().getTime());
           imageLoad.unbind("load");
           return imageLoad.bind("load", function() {
             element.attr("width", this.width);
-            return element.attr("height", this.height);
+            element.attr("height", this.height);
+            return logos.calculatePerspective(element);
           });
+        } else {
+          return logos.calculatePerspective(element);
         }
       };
 
@@ -127,7 +126,7 @@
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           child = _ref[_i];
-          _results.push(this.calculatePerspective(child));
+          _results.push(this.setImageDefaults($(child)));
         }
         return _results;
       };

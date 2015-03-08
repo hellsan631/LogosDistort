@@ -82,7 +82,6 @@ do ($ = jQuery, window, document) ->
       @$el.html ""
 
       $(child).addClass "#{@settings.cssClasses.object3d}" for child in @objects3d
-      @setImageDefaults $(child) for child in @objects3d
 
       @outerConParent = $("<div class='#{@settings.cssClasses.smartContainer}'></div>")
       @outerCon = $("<div class='#{@settings.cssClasses.overlapContainer}'></div>")
@@ -94,6 +93,8 @@ do ($ = jQuery, window, document) ->
       @calculate3dObjects()
 
     setImageDefaults: (element) ->
+      logos = @
+
       if element.is "img"
         imageLoad = $("<img />")
         imageLoad.attr "src", (element.attr "src") + "?" + new Date().getTime()
@@ -101,6 +102,9 @@ do ($ = jQuery, window, document) ->
         imageLoad.bind "load", () ->
           element.attr "width", @.width
           element.attr "height", @.height
+          logos.calculatePerspective element
+      else
+        logos.calculatePerspective element
 
     calculateOuterContainer: ->
       width = @outerConParent.innerWidth()*@settings.outerBuffer
@@ -112,7 +116,7 @@ do ($ = jQuery, window, document) ->
         top: -((height-@winH)/2).toFixed(2)
 
     calculate3dObjects: ->
-      @calculatePerspective child for child in @objects3d
+      @setImageDefaults $(child) for child in @objects3d
 
     calculatePerspective: (ele) -> #Sets the perspective (left, top, depth, height and width) of the 3d elements
       ele = $(ele)
