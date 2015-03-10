@@ -1,4 +1,4 @@
-# Advanced 3d Perspective Distortion ![Bower Version](https://badge.fury.io/bo/jquery-boilerplate.svg)
+# Advanced 3d Perspective Distortion
 
 ### Create a unique parallax environment to show off your work.
 #### Inspired by http://hellomonday.com/
