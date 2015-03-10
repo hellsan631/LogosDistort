@@ -15,8 +15,6 @@ Check out the demo's to see whats possible
 
 ## Usage
 
-There are two ways of
-
 1. Include jQuery:
 
 	```html
