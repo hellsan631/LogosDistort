@@ -96,13 +96,10 @@ do ($ = jQuery, window, document) ->
       logos = @
 
       if element.is "img"
-        imageLoad = $("<img />")
-        imageLoad.attr "src", (element.attr "src") + "?" + new Date().getTime()
-        imageLoad.unbind "load"
-        imageLoad.bind "load", () ->
-          element.attr "width", @.width
-          element.attr "height", @.height
+        element.one "load", () ->
           logos.calculatePerspective element
+        .each () -> if this.complete
+          $(this).load()
       else
         logos.calculatePerspective element
 

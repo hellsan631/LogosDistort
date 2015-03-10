@@ -92,16 +92,15 @@
       };
 
       Plugin.prototype.setImageDefaults = function(element) {
-        var imageLoad, logos;
+        var logos;
         logos = this;
         if (element.is("img")) {
-          imageLoad = $("<img />");
-          imageLoad.attr("src", (element.attr("src")) + "?" + new Date().getTime());
-          imageLoad.unbind("load");
-          return imageLoad.bind("load", function() {
-            element.attr("width", this.width);
-            element.attr("height", this.height);
+          return element.one("load", function() {
             return logos.calculatePerspective(element);
+          }).each(function() {
+            if (this.complete) {
+              return $(this).load();
+            }
           });
         } else {
           return logos.calculatePerspective(element);
