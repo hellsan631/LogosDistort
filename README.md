@@ -17,9 +17,9 @@ Check out the demo's to see whats possible
 
 There are two ways of using LogosDistort. Either through bower:
 
-    ```
-    bower install logos-distort
-    ```
+    	```
+    	bower install logos-distort
+    	```
 
 Or by downloading the repo and using the files there.
 
@@ -39,10 +39,10 @@ Or by downloading the repo and using the files there.
 
 	```html
 	<div id="demo1">
-        <img alt="background" src="assets/images/background.png" />
-        <div id="particle-target" ></div>
-        <img alt="logo" src="assets/images/logo.png" />
-    </div>
+        	<img alt="background" src="assets/images/background.png" />
+        	<div id="particle-target" ></div>
+        	<img alt="logo" src="assets/images/logo.png" />
+    	</div>
 	```
 
 > The structure can include any element, but currently only has support for full screen elements. If you'd like to make non-full screen elements respond to the matrix transform, then simply place the elements inside of a full screen div container. An example of this can be seen in demo4.html
