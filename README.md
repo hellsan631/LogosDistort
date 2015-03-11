@@ -21,7 +21,7 @@ There are two ways of using LogosDistort. Either through bower:
     	bower install logos-distort
     	```
 
-Or by downloading the repo and using the files there.
+Or by downloading the repo and using the files there
 
 1. Include jQuery:
 
