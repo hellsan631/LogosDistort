@@ -9,9 +9,9 @@ This plugin allows you to (currently) do full-page 3d perspective transforms bas
 
 Check out the demo's to see whats possible
 
-[*Demo 1] (http://mathew-kleppin.com/dev/logosdistort/demo/demo1.html) - [Demo 2] (http://mathew-kleppin.com/dev/logosdistort/demo/demo2.html) - [*Demo 3] (http://mathew-kleppin.com/dev/logosdistort/demo/demo3.html)
+[^Demo 1] (http://mathew-kleppin.com/dev/logosdistort/demo/demo1.html) - [Demo 2] (http://mathew-kleppin.com/dev/logosdistort/demo/demo2.html) - [^Demo 3] (http://mathew-kleppin.com/dev/logosdistort/demo/demo3.html)
 
-*Demo's Work Optimally in Chrome
+^Demo's Work Optimally in Chrome
 
 ## Usage
 
