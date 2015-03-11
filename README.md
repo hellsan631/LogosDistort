@@ -17,9 +17,9 @@ Check out the demo's to see whats possible
 
 There are two ways of using LogosDistort. By Using bower:
 
-    	```html
+    
     	bower install logos-distort
-    	```
+    	
 
 Or by downloading the repo and using the files there
 
