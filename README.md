@@ -16,10 +16,8 @@ Check out the demo's to see whats possible
 ## Usage
 
 There are two ways of using LogosDistort. By Using bower:
-
     
-    	bower install logos-distort
-    	
+bower install logos-distort
 
 Or by downloading the repo and using the files there
 
