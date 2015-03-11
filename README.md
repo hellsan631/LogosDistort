@@ -15,9 +15,9 @@ Check out the demo's to see whats possible
 
 ## Usage
 
-There are two ways of using LogosDistort. Either through bower:
+There are two ways of using LogosDistort. By Using bower:
 
-    	```
+    	```html
     	bower install logos-distort
     	```
 
