@@ -315,7 +315,14 @@
       };
 
       Plugin.prototype.destroy = function() {
-        this.$el.remove();
+        $elem = this.$el;
+        var images = $elem.find('img');
+        $elem.empty();
+        images.each(function(){
+          $(this).removeClass();
+          $(this).removeAttr('style');
+          $elem.append($(this));
+        });
         this.hook('onDestroy');
         return this.$el.removeData("plugin_" + pluginName);
       };
@@ -331,7 +338,12 @@
     })();
     return $.fn[pluginName] = function(options) {
       return this.each(function() {
-        if (!$.data(this, "plugin_" + pluginName)) {
+        if (typeof options === "string") {
+          var args = Array.prototype.slice.call(arguments, 1),
+          plugin = $.data(this, 'plugin_' + pluginName);
+          plugin[options].apply(plugin, args);
+        }
+        else if (!$.data(this, "plugin_" + pluginName)) {
           return $.data(this, "plugin_" + pluginName, new Plugin(this, options));
         }
       });
