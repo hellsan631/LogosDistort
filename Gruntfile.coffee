@@ -63,7 +63,7 @@ module.exports = (grunt)->
   ############################################################
 
   grunt.registerTask('build', [
-    'coffee:build' # tmp
+    #'coffee:build' # tmp
     'compass:build' # tmp
     'uglify:build' # public
     'cssmin:build' # public
