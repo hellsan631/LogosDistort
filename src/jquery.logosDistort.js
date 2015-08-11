@@ -328,8 +328,8 @@
       };
 
       Plugin.prototype.hook = function(hookName) {
-        if (options[hookName] != null) {
-          return options[hookName].call(this.element);
+        if (this.settings[hookName] != null) {
+          return this.settings[hookName].call(this.element);
         }
       };
 
