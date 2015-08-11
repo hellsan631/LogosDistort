@@ -268,7 +268,7 @@ do ($ = jQuery, window, document) ->
           el.style[t] = 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)'
           support3d = window.getComputedStyle el
           support3d = support3d.getPropertyValue transforms[t]
-
+			document.body.removeChild(el)
       if support3d? then support3d isnt 'none' else false
 
     destroy: ->
@@ -277,8 +277,8 @@ do ($ = jQuery, window, document) ->
       @$el.removeData "plugin_#{pluginName}";
 
     hook: (hookName) ->
-      if options[hookName]?
-        options[hookName].call @element
+      if @settings[hookName]?
+        @settings[hookName].call @element
 
   $.fn[pluginName] = (options) ->
     @each ->
