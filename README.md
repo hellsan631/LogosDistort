@@ -3,7 +3,7 @@
 ### Create a unique parallax environment to show off your work.
 #### Inspired by http://hellomonday.com/
 
-![Demo 1](https://i.gyazo.com/70b0b4d5d420dbc2a38df146c2043acb.gif)
+![Demo 1](demo/demo1.gif)
 
 I've always been a big fan of using subtitle 3d effects to give depth to UI and images. Ever since laying my eyes on the [26000 Vodka] (http://26000.resn.co.nz/flash.html) website many years ago, I've wanted to create something that can emulate that same kind of depth, without using cumbersome flash to do it. (Also, I didn't know flash, so there's that)
 
@@ -56,7 +56,7 @@ Or by downloading the repo and using the files there
 
 > You can customize a number of options and send them in when starting the plugin. See "Options" for more info.
 
-![Demo 3](https://i.gyazo.com/e05f1e5ff0746f235874309e8305431d.gif)
+![Demo 3](demo/demo3.gif)
 
 ## Options
 
