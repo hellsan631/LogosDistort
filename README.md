@@ -97,8 +97,7 @@ Or by downloading the repo and using the files there
 
 8: __weights:__ [ 0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200 ] _(array of numbers)_ <br/>
 	Effect weights for how much the effect will move in a given direction based on mouse movement.
-	Here is each number and what they do (about).
-
+	Here is each number and what they do (about). <br/>
 	```js
 	[
 		"distance from center",
@@ -114,8 +113,7 @@ Or by downloading the repo and using the files there
 	side-effects, as I havn't debugged this functionality. But your welcome to try it and submit a PR :)
 
 10: __cssClasses:__ _(object)_ <br/>
-	Overrides for the class names incase you want to use a similar class name for a specific element.
-
+	Overrides for the class names incase you want to use a similar class name for a specific element.<br/>
 	```js
 	{
 		smartContainer: "ld-smart-container",
