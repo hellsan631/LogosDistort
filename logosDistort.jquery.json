@@ -5,11 +5,11 @@
 	"keywords": [
 		"jquery",
 		"matrix3d",
-        "3d",
-        "effects",
-        "parallax",
-        "perspective",
-        "distortion",
+    "3d",
+    "effects",
+    "parallax",
+    "perspective",
+    "distortion",
 		"plugins"
 	],
 	"version": "0.1.0",
@@ -20,9 +20,9 @@
 	},
 	"maintainers": [
 		{
-            "name": "Mathew Kleppin",
-            "email": "mathew.kleppin@gmail.com",
-            "url": "https://github.com/hellsan631/"
+      "name": "Mathew Kleppin",
+      "email": "mathew.kleppin@gmail.com",
+      "url": "https://github.com/hellsan631/"
 		}
 	],
 	"licenses": [

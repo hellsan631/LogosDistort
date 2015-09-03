@@ -1,0 +1,27 @@
+{
+  "node": true,
+  "esnext": true,
+  "bitwise": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": "nofunc",
+  "newcap": true,
+  "nonew": true,
+  "noarg": true,
+  "regexp": true,
+  "undef": true,
+  "unused": false,
+  "trailing": true,
+  "sub": true,
+  "maxlen": 100,
+  "globals"   : {
+    /* HTML5 */
+    "localStorage": false,
+    "window": false,
+    "document": false,
+    /* jQuery+Angular */
+    "$": false
+  }
+}
