@@ -97,8 +97,9 @@ Or by downloading the repo and using the files there
 
 8: __weights:__ [ 0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200 ] _(array of numbers)_ <br/>
 	Effect weights for how much the effect will move in a given direction based on mouse movement.
-	Here is each number and what they do (about). <br/>
-	```js
+	Here is each number and what they do (about).
+	
+	
 	[
 		"distance from center",
 		"y plane neg to left, pos to right -> rotational",
@@ -106,15 +107,16 @@ Or by downloading the repo and using the files there
 		"1 minus distance from center axis point",
 		"relative distance from center x plane, top neg, bot pos"
 	]
-	```
+	
 
 9: __container:__ window _(variable)_<br/>
 	The container for which the effect will be bound. Changing this option may cause unintended
 	side-effects, as I havn't debugged this functionality. But your welcome to try it and submit a PR :)
 
 10: __cssClasses:__ _(object)_ <br/>
-	Overrides for the class names incase you want to use a similar class name for a specific element.<br/>
-	```js
+	Overrides for the class names incase you want to use a similar class name for a specific element.
+	
+	
 	{
 		smartContainer: "ld-smart-container",
 		overlapContainer: "ld-overlap-container",
@@ -123,4 +125,4 @@ Or by downloading the repo and using the files there
 		active: "ld-transform-active",
 		object3d: "ld-3d-object"
 	}
-	```
+	
