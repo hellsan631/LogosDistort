@@ -9,14 +9,15 @@
 </head>
 <body>
 
-<div id="min-max-tag"><i class="fa fa-chevron-circle-left"></i></div>
-<div id="demo-menu">
-    <ul>
-        <li><a href="demo1.html">Demo 1 - TargetProof</a></li>
-        <li><a href="demo2.html">Demo 2 - HelloMonday</a></li>
-        <li><a href="demo3.html">Demo 3 - Space Scene</a></li>
-        <li><a href="#">Demo 4 - Login</a></li>
-    </ul>
+
+<div id="demo-menu" class="closed">
+  <div id="min-max-tag"><i class="fa fa-chevron-circle-left"></i></div>
+  <ul>
+    <li><a href="index.html">Demo 1 - TargetProof</a></li>
+    <li><a href="demo2.html">Demo 2 - HelloMonday</a></li>
+    <li><a href="demo3.html">Demo 3 - Space Scene</a></li>
+    <li><a href="#">Demo 4 - Login</a></li>
+  </ul>
 </div>
 
 <div id="demo1">
@@ -25,7 +26,7 @@
     <img alt="logo" src="assets/images/logo.png" />
 </div>
 
-<script src="../bower_components/jQuery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="assets/js/jquery.logosDistort.min.js"></script>
 <script src="assets/js/jquery.particleground.min.js"></script>
 <script>
@@ -36,6 +37,14 @@
             outerBuffer: 1.08,
             elementDepth: 220
         };
+
+    $('#min-max-tag').click(function(){
+      if ($('#demo-menu').hasClass('closed')) {
+        $('#demo-menu').removeClass('closed').addClass('open');
+      } else {
+        $('#demo-menu').removeClass('open').addClass('closed');
+      }
+    })
 
     $(document).ready(function() {
 
