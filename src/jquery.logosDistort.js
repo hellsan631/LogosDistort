@@ -49,7 +49,9 @@
         transformTarget: 'ld-transform-target',
         active: 'ld-transform-active',
         object3d: 'ld-3d-object'
-      }
+      },
+      onInit: function() {},
+      onDestroy: function() {}
     };
 
     this.options.extend(options);
@@ -72,12 +74,24 @@
     this.has3dSupport = this._has3d();
 
     this.paused = false;
-    this.raf = null;
+    this.raf    = null;
 
     this.init();
   }
 
   Distortion.prototype.init = function(){
+    var _this = this;
+
+    this.createEnvironment();
+    this.options.onInit();
+
+    this._addEvent(this.container, 'mousemove', function(e){
+      console.log(e);
+
+      this.mouseX = e.pageX;
+      this.mouseY = e.pageY;
+    });
+
 
   };
 
@@ -250,6 +264,20 @@
       return has3d !== 'none';
     } else {
       return false;
+    }
+  };
+
+  Distortion.prototype._addEvent = function(element, type, fn) {
+    if (element.attachEvent) {
+      element['e' + type + fn] = fn;
+
+      element[type + fn] = function() {
+        element['e' + type + fn](win.event);
+      };
+
+      element.attachEvent('on' + type, obj[type + fn]);
+    } else {
+      element.addEventListener(type, fn, false );
     }
   };
 
