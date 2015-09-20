@@ -3,6 +3,7 @@
   /**
    * Main function to create distortion effect.
    * @param element - The element(s) to apply the distortion effect
+   * @param option - a set of options to override the default settings
    */
   function logosDistort(elements, options) {
     if (!element) {
@@ -40,13 +41,14 @@
       directions: [1, 1, 1, 1, -1, -1, 1, 1],
       weights: [0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200],
       container: window,
+      depthOverride: false,
       cssClasses: {
-        smartContainer: "ld-smart-container",
-        overlapContainer: "ld-overlap-container",
-        parent3d: "ld-3d-parent",
-        transformTarget: "ld-transform-target",
-        active: "ld-transform-active",
-        object3d: "ld-3d-object"
+        smartContainer: 'ld-smart-container',
+        overlapContainer: 'ld-overlap-container',
+        parent3d: 'ld-3d-parent',
+        transformTarget: 'ld-transform-target',
+        active: 'ld-transform-active',
+        object3d: 'ld-3d-object'
       }
     };
 
@@ -121,6 +123,14 @@
     );
   };
 
+  Distortion.prototype.calculate3dObjects = function() {
+    var _this = this;
+
+    this.objects3d.forEach(function(node){
+      _this.setImageDefaults(node);
+    });
+  };
+
   Distortion.prototype.setImageDefaults = function (element) {
     var _this = this;
 
@@ -137,17 +147,71 @@
     }
   };
 
-  
+  Distortion.prototype.calculatePerspective = function(node) {
+    var index = Array.prototype.indexOf.call(node.parentNode.childNodes, node);
+    var aspect;
 
+    /*
+      If we have a lot of elements in the array, for performance considerations,
+      we want to halve the depth. There is an override to stop this, but caution,
+      performance will be much worse.
+    */
+    if(this.objects3d.length > 4 && !depthOverride) {
+      index = index - (this.objects3d.length / 2);
+    }
+
+    var depth = index * this.options.elementDepth;
+
+    var aspectDevice  = this.getAspectRatio();
+    var aspectElement = this.getAspectRatio(node);
+
+    if (isNaN(aspectElement[0]) || ele.tagName.toLowerCase() === "div") {
+      aspect = aspectDevice;
+    } else {
+      aspect = aspectElement;
+    }
+
+    var height  = (this.outerConParent.offsetHeight*this.options.outerBuffer).toFixed(2);
+    var width   = (height * aspect[0]).toFixed(2);
+
+    /*
+      If calculated width is greater then the outerBuffer width,
+      i.e. element uses a height heavy aspect ratio, like on mobile,
+      we want to re-calculate everything using some more height-friendly maths.
+    */
+    if (width < (this.width * this.options.outerBuffer)) {
+      difference  = this.width / width;
+      width       = (width  *difference * this.options.outerBuffer).toFixed(2);
+      height      = (height *difference * this.options.outerBuffer).toFixed(2);
+    }
+
+    var left  = -((width  - this.width )/2).toFixed(2);
+    var top   = -((height - this.height)/2).toFixed(2);
+
+    node.setAttribute('style',
+      'transform: translate3d(' +
+      left  + 'px, ' +
+      top   + 'px, ' +
+      depth + 'px);' +
+      'width: '  + width  + '; ' +
+      'height: ' + height + '; '
+    );
+  };
 
   Distortion.prototype.getCenterOfContainer = function() {
     return { x: this.width/2, y: this.height/2 };
   };
 
-  Distortion.prototype.getAspectRatio = function() {
+  Distortion.prototype.getAspectRatio = function(ele) {
+
+    // Fixes bug where content was always sized to window, use container instead!
+    if (!ele) {
+      ele = this.options.container;
+    }
+
     return [
-      this.element.offsetWidth/this.element.offsetHeight,
-      this.element.offsetHeight/this.element.offsetWidth
+      ele.offsetWidth  / ele.offsetHeight,
+      ele.offsetHeight / ele.offsetWidth
     ];
   };
 
@@ -169,7 +233,7 @@
     var has3d;
     var t;
 
-    /* Add it to the body to get the computed style.*/
+    /* Add it to the body to get the computed style. */
     document.body.insertBefore(el, document.body.lastChild);
 
     for(t in transforms){
@@ -178,6 +242,9 @@
         has3d = window.getComputedStyle(el).getPropertyValue( transforms[t] );
       }
     }
+
+    /* Remove used element from body. */
+    el.parentNode.removeChild(el);
 
     if( has3d !== undefined ){
       return has3d !== 'none';
