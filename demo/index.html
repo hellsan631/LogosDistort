@@ -27,15 +27,31 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="assets/js/jquery.logosDistort.min.js"></script>
 <script src="assets/js/jquery.particleground.min.js"></script>
+<script src="jquery.logosDistort.js"></script>
 <script>
-    var particles = true,
-        particleDensity,
-        options = {
+    var particles = true;
+    var particleDensity;
+    var options = {
             effectWeight: 1,
             outerBuffer: 1.08,
-            elementDepth: 220
+            elementDepth: 220,
+            onInit: function() {
+              if (particles) {
+                  particleDensity = window.outerWidth * 7.5;
+                  if (particleDensity < 13000) {
+                      particleDensity = 13000;
+                  } else if (particleDensity > 20000) {
+                      particleDensity = 20000;
+                  }
+                  return $('#particle-target').particleground({
+                      dotColor: '#1ec5ee',
+                      lineColor: '#0a4e90',
+                      density: particleDensity.toFixed(0),
+                      parallax: false
+                  });
+              }
+            }
         };
 
     $('#min-max-tag').click(function(){
@@ -48,22 +64,8 @@
 
     $(document).ready(function() {
 
-        $("#demo1").logosDistort(options);
+      var distort = new logosDistort(document.getElementById('demo1'), options);
 
-        if (particles) {
-            particleDensity = window.outerWidth * 7.5;
-            if (particleDensity < 13000) {
-                particleDensity = 13000;
-            } else if (particleDensity > 20000) {
-                particleDensity = 20000;
-            }
-            return $('#particle-target').particleground({
-                dotColor: '#1ec5ee',
-                lineColor: '#0a4e90',
-                density: particleDensity.toFixed(0),
-                parallax: false
-            });
-        }
     });
 </script>
 
