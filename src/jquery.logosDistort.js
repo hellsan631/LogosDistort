@@ -59,6 +59,7 @@
 
     this.options.extend(options);
     this.element = element;
+    this.eventCache = [];
 
     this.container  = this.options.container;
 
@@ -86,9 +87,8 @@
     this.has3dSupport = this._has3d();
 
     this.paused = false;
-    this.raf    = null;
 
-    this.options.beforeInit();
+    this.options.beforeInit(this);
 
     this.init();
   }
@@ -100,9 +100,144 @@
     this.options.onInit();
 
     this._addEvent(this.container, 'mousemove', function(e){
-      this.mouseX = e.x;
-      this.mouseY = e.y;
+      _this.mouseX = e.x;
+      _this.mouseY = e.y;
     });
+
+    this._addEvent(window, 'resize', function(){
+      _this.resizeHandler();
+    });
+
+    this.start();
+  };
+
+  Distortion.prototype.start = function() {
+    var _this = this;
+
+    this.paused = false;
+
+    if (this.has3dSupport) {
+      this.drawInterval = setInterval(function() {
+        _this.draw();
+      }, 15);
+    }
+  };
+
+  Distortion.prototype.stop = function() {
+    this.paused = true;
+
+    clearInterval(this.drawInterval);
+  };
+
+  Distortion.prototype.draw = function() {
+    var _this = this;
+
+    if (this.effectX === this.mouseX || this.effectY === this.mouseY) {
+      return;
+    }
+
+    if (!this.options.enableSmoothing) {
+      this.effectX = this.mouseX;
+      this.effectY = this.mouseY;
+    } else {
+      this.effectX += (this.mouseX - this.effectX) / (20*this.options.smoothingMultiplier);
+      this.effectY += (this.mouseY - this.effectY) / (20*this.options.smoothingMultiplier);
+    }
+
+    if (!this.paused) {
+      this.changePerspective(this.transformTarget, this.effectX, this.effectY);
+    }
+  };
+
+  Distortion.prototype.changePerspective = function(element, appliedX, appliedY) {
+    var _this = this;
+
+    requestAnimationFrame(function(){
+      element.setAttribute('style', _this.generateTransformString(appliedX, appliedY));
+    });
+  };
+
+  Distortion.prototype.generateTransformString = function(appliedX, appliedY) {
+    var _transforms = this.calculateTransform(appliedX, appliedY);
+
+    var _transformString = 'transform: matrix3d(' +
+      _transforms[0]+ ', 0, ' + _transforms[1] + ', 0, ' +
+      _transforms[2] + ', ' + _transforms[3] + ', ' + _transforms[4] + ', 0, ' +
+      _transforms[5] + ', ' + _transforms[6] + ', ' + _transforms[7] + ', 0, ' +
+      '0, 0, 100, 1)';
+
+    return _transformString;
+  };
+
+  Distortion.prototype.calculateTransform = function (appliedX, appliedY) {
+    var _transforms = [];
+    var _directions = this.options.directions;
+    var _temp;
+
+    var _fromCenter = this.getDistanceFromCenter(appliedX, appliedY);
+    var _fromX = this.getDistanceFromCenterX(appliedY);
+    var _fromY = this.getDistanceFromCenterY(appliedX);
+
+    var _fromCenterAndEdge = this.getDistanceFromEdgeCenterAndCenter(_fromCenter, _fromX, _fromY);
+
+    // Lets add our transforms to the array
+
+    //1
+    _transforms.push(_directions[0] * (1 - (this.applyTransform(_fromCenter, 0) * this.options.effectWeight)));
+
+    //2
+    _transforms.push(_directions[1] * (this.applyTransform(_fromY, 1) * this.options.effectWeight));
+
+    //3
+    _transforms.push(_directions[2] * (this.applyTransform(_fromCenterAndEdge, 2) * this.options.effectWeight));
+
+    //4
+    _transforms.push(_directions[3] * (1 - (this.applyTransform(_fromCenter, 3) * this.options.effectWeight)));
+
+    //5
+    _transforms.push(_directions[4] * (this.applyTransform(_fromX, 4) * this.options.effectWeight));
+
+    //6
+    _transforms.push(_directions[5] * _transforms[1]);
+
+    //7
+    _transforms.push(_directions[6] * _transforms[4]);
+
+    //8
+    _transforms.push(_directions[7] * Math.abs(_transforms[3]));
+
+    _transforms.forEach(function(transform){
+      transform = transform.toFixed(5);
+    });
+
+    return _transforms;
+  };
+
+  Distortion.prototype.applyTransform = function(distance, effect) {
+    return distance * this.options.weights[effect];
+  };
+
+  Distortion.prototype.getDistanceFromCenter = function (appliedX, appliedY) {
+    return this.getDistance2d(appliedX, appliedY, this.center.x, this.center.y);
+  };
+
+  Distortion.prototype.getDistanceFromCenterY = function(appliedX) {
+    return appliedX - this.center.x/2;
+  };
+
+  Distortion.prototype.getDistanceFromCenterX = function(appliedY) {
+    return appliedY - this.center.y/2;
+  };
+
+  Distortion.prototype.getDistanceFromEdgeCenterAndCenter = function(fromCenter, fromX, fromY) {
+
+    //divide by 50 instead of 100 because distance is already divided by 2
+    return -((fromCenter/100) * (fromX/50) * (fromY/50));
+  };
+
+
+  Distortion.prototype.getDistance2d = function (currX, currY, targetX, targetY) {
+    return Math.sqrt(Math.pow(currX - targetX, 2) + (Math.pow(currY - targetY, 2)));
   };
 
   Distortion.prototype.createEnvironment = function() {
@@ -188,7 +323,7 @@
       we want to halve the depth. There is an override to stop this, but caution,
       performance will be much worse.
     */
-    if(this.objects3d.length > 4 && !depthOverride) {
+    if(this.objects3d.length > 4 && !this.options.depthOverride) {
       index = index - (this.objects3d.length / 2);
     }
 
@@ -205,8 +340,6 @@
 
     var height  = (this.outerConParent.offsetHeight*this.options.outerBuffer).toFixed(2);
     var width   = (height * aspect[0]).toFixed(2);
-
-    console.log(width);
 
     /*
       If calculated width is less then the outerBuffer width,
@@ -255,6 +388,32 @@
     );
   };
 
+  Distortion.prototype.resizeHandler = function() {
+
+    if(this.container.innerWidth && this.container.innerWidth !== this.container.offsetWidth) {
+      this.container.offsetWidth = null;
+    }
+
+    if(this.container.innerHeight && this.container.innerHeight !== this.container.offsetHeight) {
+      this.container.offsetHeight = null;
+    }
+
+    if (!this.container.offsetWidth) {
+      this.container.offsetWidth = this.container.innerWidth;
+    }
+
+    if (!this.container.offsetHeight) {
+      this.container.offsetHeight = this.container.innerHeight;
+    }
+
+    this.width      = this.container.offsetWidth;
+    this.height     = this.container.offsetHeight;
+    this.center     = this.getCenterOfContainer();
+
+    this.calculateOuterContainer();
+    this.calculate3dObjects();
+  };
+
   Distortion.prototype._has3d = function(){
     var el = document.createElement('p');
     var transforms = {
@@ -288,16 +447,30 @@
   };
 
   Distortion.prototype._addEvent = function(element, type, fn) {
-    if (element.attachEvent) {
-      element['e' + type + fn] = fn;
+    element.addEventListener(type, fn, false);
 
-      element[type + fn] = function() {
-        element['e' + type + fn](win.event);
-      };
+    this.eventCache.push({element: element, type: type, fn: fn});
+  };
 
-      element.attachEvent('on' + type, obj[type + fn]);
-    } else {
-      element.addEventListener(type, fn, false);
+  Distortion.prototype.clearEvents = function() {
+    this.eventCache.forEach(function(e){
+      e.element.removeEventListener(e.type, e.fn, false);
+    });
+  };
+
+  Distortion.prototype.destroy = function() {
+    this.clearEvents();
+    this.element.parentNode.removeChild(this.element);
+    this.hook('onDestroy');
+
+    if (this.element.removeData) {
+      this.element.removeData('plugin_'+this._name);
+    }
+  };
+
+  Distortion.prototype.hook = function(hookName) {
+    if(this.options[hookName]){
+      this.options[hookName].call(this.element);
     }
   };
 

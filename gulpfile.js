@@ -38,6 +38,9 @@ gulp.task('build', function() {
   gulp.src('src/*.css')
     .pipe(gulp.dest('demo/assets/css'));
 
+  gulp.src(src)
+    .pipe(gulp.dest('dist'));
+
   return gulp.src(src)
     .pipe(plumber({
         errorHandler: onError
@@ -74,13 +77,6 @@ gulp.task('serve-watch-css', function(){
 });
 
 gulp.task('serve-watch-js', function(){
-
-
   return gulp.src(src)
-    .pipe(plumber({
-        errorHandler: onError
-    }))
-    //.pipe(uglify())
-    //.pipe(concat(output.build))
     .pipe(gulp.dest('demo'));
 });

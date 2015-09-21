@@ -36,6 +36,7 @@
             effectWeight: 1,
             outerBuffer: 1.08,
             elementDepth: 220,
+            enableSmoothing: true,
             onInit: function() {
               if (particles) {
                   particleDensity = window.outerWidth * 7.5;
@@ -60,11 +61,11 @@
       } else {
         $('#demo-menu').removeClass('open').addClass('closed');
       }
-    })
+    });
 
     $(document).ready(function() {
 
-      var distort = new logosDistort(document.getElementById('demo1'), options);
+      $('#demo1').logosDistort(options);
 
     });
 </script>
