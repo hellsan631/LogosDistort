@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logos Perspective Distortion Demo 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/perspectiveRules.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<div id="demo-menu" class="closed">
+  <div id="min-max-tag"><i class="fa fa-chevron-circle-left"></i></div>
+  <ul>
+    <li><a href="index.html">Demo 1 - TargetProof</a></li>
+    <li><a href="demo2.html">Demo 2 - HelloMonday</a></li>
+    <li><a href="demo3.html">Demo 3 - Space Scene</a></li>
+    <li><a href="demo4.html">Demo 4 - Login</a></li>
+    <li><a href="demo5.html">Demo 5 - Multiple Scenes</a></li>
+  </ul>
+</div>
+
+<div id="demo1">
+    <img alt="background" src="assets/images/background.png" />
+    <div id="particle-target" ></div>
+    <img alt="logo" src="assets/images/logo.png" />
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="assets/js/jquery.particleground.min.js"></script>
+<script src="jquery.logosDistort.js"></script>
+<script>
+    var particles = true;
+    var particleDensity;
+    var options = {
+            effectWeight: 1,
+            outerBuffer: 1.05,
+            elementDepth: 200,
+            perspectiveMulti: 1.5,
+            enableSmoothing: true,
+            onInit: function() {
+              if (particles) {
+                  return $('#particle-target').particleground({
+                      dotColor: '#1ec5ee',
+                      lineColor: '#0a4e90',
+                      density: 20000,
+                      parallax: false
+                  });
+              }
+            }
+        };
+
+    $('#min-max-tag').click(function(){
+      if ($('#demo-menu').hasClass('closed')) {
+        $('#demo-menu').removeClass('closed').addClass('open');
+      } else {
+        $('#demo-menu').removeClass('open').addClass('closed');
+      }
+    });
+
+    $(document).ready(function() {
+
+      $('#demo1').logosDistort(options);
+
+    });
+</script>
+
+</body>
+</html>
