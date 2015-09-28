@@ -12,7 +12,7 @@
     "distortion",
 		"plugins"
 	],
-	"version": "0.1.0",
+	"version": "0.3.0",
 	"author": {
 		"name": "Mathew Kleppin",
 		"email": "mathew.kleppin@gmail.com",
@@ -30,7 +30,5 @@
 			"type": "MIT"
 		}
 	],
-	"dependencies": {
-		"jquery": ">=1.4"
-	}
+	"dependencies": {}
 }
