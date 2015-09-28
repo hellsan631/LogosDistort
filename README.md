@@ -3,7 +3,7 @@
 ### Create a unique parallax environment to show off your work.
 #### Inspired by http://hellomonday.com/
 
-![Demo 1](demo/demo1.gif)
+<img src="demo/demo1.gif" alt="demo 1">
 
 I've always been a big fan of using subtitle 3d effects to give depth to UI and images. Ever since laying my eyes on the [26000 Vodka] (http://26000.resn.co.nz/flash.html) website many years ago, I've wanted to create something that can emulate that same kind of depth, without using cumbersome flash to do it. (Also, I didn't know flash, so there's that)
 
@@ -51,12 +51,18 @@ Or by downloading the repo and using the files there
 4. Call the plugin:
 
 	```javascript
-	$("#demo1").logosDistort();
+	$("#demo1").logosDistort(options);
+
+	//or non jquery ways
+
+	var distortion = new logosDistort(document.getElementById('demo1'), options);
 	```
 
 > You can customize a number of options and send them in when starting the plugin. See "Options" for more info.
 
-![Demo 3](demo/demo3.gif)
+<img src="demo/demo3.gif" alt="demo 3">
+
+<img src="demo/demo5.gif" alt="demo 5">
 
 ## Options
 
@@ -90,39 +96,50 @@ Or by downloading the repo and using the files there
 	overall scene depth, meaning that if you have more then 4-5 elements in a scene, consider leaving
 	this setting at its default value, or making it lower.
 
-7. __directions:__ [ 1, 1, 1, 1, -1, -1, 1, 1 ] _(array of numbers)_ <br/>
+7. __depthOverride:__ false _(boolean)_ <br/>
+	If there are a lot of elements in the scene, logosDistort will halve the depth for each element,
+	to maintain good performance (default setting of false). However, you can turn this off manually if
+	you don't have any performance concerns by setting this to ```true```;
+
+8. __perspectiveMulti:__ 1.0 _(number)_ <br/>
+	Changes the perspective of the 3d parent container. This changes the focal point where the scene
+	will rotate around. A higher multiplier means a smaller rotation, but things will seem far away.
+	A lower multiplier (below 1.0) means the scene will be closer and will rotate more, which might
+	expose the background.
+
+9. __directions:__ [ 1, 1, 1, 1, -1, -1, 1, 1 ] _(array of numbers)_ <br/>
 	Weights for the directions of the parallax effect based on mouse movement. Default is set so that
 	the "center" of the effect moves opposite to the mouse in all directions. Changes in this can break
-	the effect. See the Demo3 for an example on how to set these directions.
+	the effect. See the Demo3 for an example on how to set these directions
 
-8: __weights:__ [ 0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200 ] _(array of numbers)_ <br/>
+10. __weights:__ [ 0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200 ] _(array of numbers)_ <br/>
 	Effect weights for how much the effect will move in a given direction based on mouse movement.
 	Here is each number and what they do (about).
 
-	```js
-	[
-		"distance from center",
-		"y plane neg to left, pos to right -> rotational",
-		"distance from center axis point X and Y",
-		"1 minus distance from center axis point",
-		"relative distance from center x plane, top neg, bot pos"
-	]
-	```
+    ```js
+	  [
+		  "distance from center",
+		  "y plane neg to left, pos to right -> rotational",
+		  "distance from center axis point X and Y",
+		  "1 minus distance from center axis point",
+		  "relative distance from center x plane, top neg, bot pos"
+	  ]
+	  ```
 
-9: __container:__ window _(variable)_<br/>
+11. __container:__ window _(variable)_<br/>
 	The container for which the effect will be bound. Changing this option may cause unintended
 	side-effects, as I havn't debugged this functionality. But your welcome to try it and submit a PR :)
 
-10: __cssClasses:__ _(object)_ <br/>
+12. __cssClasses:__ _(object)_ <br/>
 	Overrides for the class names incase you want to use a similar class name for a specific element.
 
-	```js
-	{
-		smartContainer: "ld-smart-container",
-		overlapContainer: "ld-overlap-container",
-		parent3d: "ld-3d-parent",
-		transformTarget: "ld-transform-target",
-		active: "ld-transform-active",
-		object3d: "ld-3d-object"
-	}
-	```
+	  ```js
+	  {
+		  smartContainer: "ld-smart-container",
+		  overlapContainer: "ld-overlap-container",
+		  parent3d: "ld-3d-parent",
+		  transformTarget: "ld-transform-target",
+		  active: "ld-transform-active",
+		  object3d: "ld-3d-object"
+	  }
+	  ```

@@ -16,7 +16,8 @@
     <li><a href="index.html">Demo 1 - TargetProof</a></li>
     <li><a href="demo2.html">Demo 2 - HelloMonday</a></li>
     <li><a href="demo3.html">Demo 3 - Space Scene</a></li>
-    <li><a href="#">Demo 4 - Login</a></li>
+    <li><a href="demo4.html">Demo 4 - Login</a></li>
+    <li><a href="demo5.html">Demo 5 - Multiple Scenes</a></li>
   </ul>
 </div>
 
@@ -34,21 +35,16 @@
     var particleDensity;
     var options = {
             effectWeight: 1,
-            outerBuffer: 1.08,
-            elementDepth: 220,
+            outerBuffer: 1.05,
+            elementDepth: 200,
+            perspectiveMulti: 1.5,
             enableSmoothing: true,
             onInit: function() {
               if (particles) {
-                  particleDensity = window.outerWidth * 7.5;
-                  if (particleDensity < 13000) {
-                      particleDensity = 13000;
-                  } else if (particleDensity > 20000) {
-                      particleDensity = 20000;
-                  }
                   return $('#particle-target').particleground({
                       dotColor: '#1ec5ee',
                       lineColor: '#0a4e90',
-                      density: particleDensity.toFixed(0),
+                      density: 20000,
                       parallax: false
                   });
               }

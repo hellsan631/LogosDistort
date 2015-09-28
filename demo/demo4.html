@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logos Perspective Distortion Demo 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/perspectiveRules.css" rel="stylesheet" />
+</head>
+<style>
+  .fullpage {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:3;
+  }
+
+  .login-con {
+    width:100%;
+    position:absolute;
+    top:50%;
+    text-align:center;
+    z-index:inherit;
+  }
+
+  .login {
+    position: absolute;
+    display: inline-block;
+    width: 300px;
+    height: 210px;
+    margin-top: -105px;
+    margin-left: -150px;
+    background:#f1f1f1;
+    color:#222;
+    text-align: left;
+    border-radius: 2px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    padding: 32px;
+    z-index:inherit;
+  }
+
+  .title {
+    font-size: 32px;
+    padding-bottom: 20px;
+    display:block;
+  }
+
+  input {
+    width: 100%;
+  }
+
+</style>
+<body>
+
+  <div class="fullpage">
+    <div class="login-con">
+      <div class="login">
+        <span class="title">Login</span><br/>
+        <input type="text" placeholder="Email" /><br/><br/>
+        <input type="password" placeholder="Password" />
+      </div>
+    </div>
+  </div>
+
+  <div id="demo2">
+      <img alt="background" src="assets/images/HM_jviewz_sotm_01.jpg" />
+      <img alt="ui" src="assets/images/HM_jviewz_sotm_02.png" />
+      <img alt="ui-2" src="assets/images/HM_jviewz_sotm_03.png" />
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="jquery.logosDistort.js"></script>
+  <script src="assets/js/jquery.particleground.min.js"></script>
+  <script>
+      var distort = new logosDistort(
+        document.getElementById('demo2'),
+        {perspectiveMulti: 1.3}
+      );
+  </script>
+
+</body>
+</html>

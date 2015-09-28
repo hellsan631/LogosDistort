@@ -40,10 +40,12 @@
       activeOnlyInside: false,
       outerBuffer: 1.10,
       elementDepth: 140,
+      perspectiveMulti: 1,
       directions: [1, 1, 1, 1, -1, -1, 1, 1],
       weights: [0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200],
       container: win,
       depthOverride: false,
+      mouseMode: 'container',
       cssClasses: {
         smartContainer: 'ld-smart-container',
         overlapContainer: 'ld-overlap-container',
@@ -60,6 +62,13 @@
     this.options.extend(options);
     this.element = element;
     this.eventCache = [];
+
+    if (this.options.container === 'self') {
+      this.containerOverride = true;
+      this.options.container = this.element;
+    } else {
+      this.containerOverride = false;
+    }
 
     this.container  = this.options.container;
 
@@ -96,19 +105,53 @@
   Distortion.prototype.init = function(){
     var _this = this;
 
+    doc.addEventListener('mouseenter', initMouse, false);
+
     this.createEnvironment();
     this.options.onInit();
 
-    this._addEvent(this.container, 'mousemove', function(e){
-      _this.mouseX = e.x;
-      _this.mouseY = e.y;
-    });
+
+    if (this.options.mouseMode === 'container') {
+
+      //bind mouse movement to element
+      this._addEvent(this.container, 'mousemove', setMousePos);
+
+    } else if (this.options.mouseMode === 'window') {
+
+      //bind mouse movement to window
+      this._addEvent(window, 'mousemove', setMousePos);
+
+    } else if (this.options.mouseMode === 'magnetic') {
+
+      //bind mouse movement to using the same x and y
+      this._addEvent(window, 'mousemove', function(e){
+        var fromX = Math.abs(e.x - _this.center.x);
+        var fromY = Math.abs(e.y - _this.center.y);
+
+        if(fromY < (_this.height/2) || fromX < (_this.width/2)) {
+          _this.mouseX = e.x;
+          _this.mouseY = e.y;
+        }
+      });
+    }
 
     this._addEvent(window, 'resize', function(){
       _this.resizeHandler();
     });
 
     this.start();
+
+    function setMousePos(e) {
+      _this.mouseX = e.x;
+      _this.mouseY = e.y;
+    }
+
+    function initMouse(e) {
+      _this.mouseX = e.x;
+      _this.mouseY = e.y;
+
+      doc.removeEventListener('mouseenter', initMouse, false);
+    }
   };
 
   Distortion.prototype.start = function() {
@@ -206,8 +249,8 @@
     //8
     _transforms.push(_directions[7] * Math.abs(_transforms[3]));
 
-    _transforms.forEach(function(transform){
-      transform = transform.toFixed(5);
+    _transforms.forEach(function(transform, index){
+      _transforms[index] = transform.toFixed(5);
     });
 
     return _transforms;
@@ -269,6 +312,11 @@
     this.outerConParent.classList.add(this.options.cssClasses.smartContainer);
     this.outerCon.classList.add(this.options.cssClasses.overlapContainer);
     this.parent3d.classList.add(this.options.cssClasses.parent3d);
+
+    var perspective = 9000 * this.options.perspectiveMulti;
+
+    this.parent3d.setAttribute('style', 'perspective: ' + perspective + 'px;');
+
     this.transformTarget.classList.add(this.options.cssClasses.transformTarget, this.options.cssClasses.active);
 
     this.element.appendChild(_env);
@@ -361,12 +409,18 @@
       top   + 'px, ' +
       depth + 'px);' +
       'width: '  + width  + 'px; ' +
-      'height: ' + height + 'px; '
+      'height: ' + height + 'px; ' +
+      'z-index: ' + (index + 1) + ';'
     );
   };
 
   Distortion.prototype.getCenterOfContainer = function() {
-    return { x: this.width/2, y: this.height/2 };
+    this.rect = this.element.getBoundingClientRect();
+
+    return {
+      x: this.rect.left + (this.width/2),
+      y: this.rect.top + (this.height/2),
+    };
   };
 
   Distortion.prototype.getAspectRatio = function(ele) {
