@@ -1,6 +1,8 @@
 # Advanced 3d Perspective Distortion
 
-### Create a unique parallax environment to show off your work.
+[![License](http://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
+#### Create a unique parallax environment to show off your work.
 #### Inspired by http://hellomonday.com/
 
 <img src="demo/demo1.gif" alt="demo 1">
@@ -70,6 +72,9 @@ Or by downloading the repo and using the files there
 <img src="demo/demo3.gif" alt="demo 3">
 
 <img src="demo/demo5.gif" alt="demo 5">
+
+> __Note:__ When setting multiple elements to use the effect, each of their containers needs to
+> have position:relative in their css style. [See demo5.html](https://github.com/hellsan631/LogosDistort/blob/master/demo/demo5.html#L18)
 
 ## Options
 
