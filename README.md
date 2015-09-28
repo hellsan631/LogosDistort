@@ -129,7 +129,6 @@ Or by downloading the repo and using the files there
 11. __weights:__ [ 0.0000310, 0.0001800, 0.0000164, 0.0000019, 0.0001200 ] _(array of numbers)_ <br/>
 	Effect weights for how much the effect will move in a given direction based on mouse movement.
 	Here is each number and what they do (about).
-
     ```js
 	  [
 		  "distance from center",
@@ -157,3 +156,5 @@ Or by downloading the repo and using the files there
 		  object3d: "ld-3d-object"
 	  }
 	  ```
+
+### Yay
