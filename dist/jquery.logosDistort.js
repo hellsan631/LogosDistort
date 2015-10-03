@@ -81,8 +81,10 @@
       this.container.offsetHeight = this.container.innerHeight;
     }
 
-    this.width      = this.container.offsetWidth;
-    this.height     = this.container.offsetHeight;
+    this.rect       = this.element.getBoundingClientRect();
+
+    this.width      = this.rect.width;
+    this.height     = this.rect.height;
     this.center     = this.getCenterOfContainer();
 
     this.outerCon         = null;
@@ -109,7 +111,6 @@
 
     this.createEnvironment();
     this.options.onInit();
-
 
     if (this.options.mouseMode === 'container') {
 
@@ -139,7 +140,25 @@
       _this.resizeHandler();
     });
 
+    visableHandler();
+
+    if (window.addEventListener) {
+      addEventListener('DOMContentLoaded', visableHandler, false);
+      addEventListener('load', visableHandler, false);
+      addEventListener('scroll', visableHandler, false);
+      addEventListener('resize', visableHandler, false);
+    } else if (window.attachEvent)  {
+      attachEvent('onDOMContentLoaded', visableHandler); // IE9+ :(
+      attachEvent('onload', visableHandler);
+      attachEvent('onscroll', visableHandler);
+      attachEvent('onresize', visableHandler);
+    }
+
     this.start();
+
+    function visableHandler() {
+      _this.visable = _this._isElementInViewport();
+    }
 
     function setMousePos(e) {
       _this.mouseX = e.x;
@@ -162,7 +181,7 @@
     if (this.has3dSupport) {
       this.drawInterval = setInterval(function() {
         _this.draw();
-      }, 15);
+      }, 16);
     }
   };
 
@@ -173,7 +192,9 @@
   };
 
   Distortion.prototype.draw = function() {
-    var _this = this;
+    if (!this.visable) {
+      return;
+    }
 
     if (this.effectX === this.mouseX || this.effectY === this.mouseY) {
       return;
@@ -183,8 +204,8 @@
       this.effectX = this.mouseX;
       this.effectY = this.mouseY;
     } else {
-      this.effectX += (this.mouseX - this.effectX) / (20*this.options.smoothingMultiplier);
-      this.effectY += (this.mouseY - this.effectY) / (20*this.options.smoothingMultiplier);
+      this.effectX += (this.mouseX - this.effectX) / (20 * this.options.smoothingMultiplier);
+      this.effectY += (this.mouseY - this.effectY) / (20 * this.options.smoothingMultiplier);
     }
 
     if (!this.paused) {
@@ -415,8 +436,6 @@
   };
 
   Distortion.prototype.getCenterOfContainer = function() {
-    this.rect = this.element.getBoundingClientRect();
-
     return {
       x: this.rect.left + (this.width/2),
       y: this.rect.top + (this.height/2),
@@ -430,9 +449,11 @@
       ele = this.options.container;
     }
 
+    var rect = ele.getBoundingClientRect();
+
     return [
-      ele.offsetWidth  / ele.offsetHeight,
-      ele.offsetHeight / ele.offsetWidth
+      rect.width  / rect.height,
+      rect.height / rect.width
     ];
   };
 
@@ -443,25 +464,10 @@
   };
 
   Distortion.prototype.resizeHandler = function() {
+    this.rect       = this.element.getBoundingClientRect();
 
-    if(this.container.innerWidth && this.container.innerWidth !== this.container.offsetWidth) {
-      this.container.offsetWidth = null;
-    }
-
-    if(this.container.innerHeight && this.container.innerHeight !== this.container.offsetHeight) {
-      this.container.offsetHeight = null;
-    }
-
-    if (!this.container.offsetWidth) {
-      this.container.offsetWidth = this.container.innerWidth;
-    }
-
-    if (!this.container.offsetHeight) {
-      this.container.offsetHeight = this.container.innerHeight;
-    }
-
-    this.width      = this.container.offsetWidth;
-    this.height     = this.container.offsetHeight;
+    this.width      = this.rect.width;
+    this.height     = this.rect.height;
     this.center     = this.getCenterOfContainer();
 
     this.calculateOuterContainer();
@@ -500,15 +506,32 @@
     }
   };
 
+  Distortion.prototype._isElementInViewport = function() {
+    return (
+        this.rect.bottom  >= 0 &&
+        this.rect.right   >= 0 &&
+        this.rect.top   <= window.innerHeight &&
+        this.rect.left  <= window.innerWidth
+    );
+  };
+
   Distortion.prototype._addEvent = function(element, type, fn) {
-    element.addEventListener(type, fn, false);
+    if (window.addEventListener) {
+      element.addEventListener(type, fn, false);
+    } else if (window.attachEvent) {
+      element.attachEvent(type, fn);
+    }
 
     this.eventCache.push({element: element, type: type, fn: fn});
   };
 
   Distortion.prototype.clearEvents = function() {
     this.eventCache.forEach(function(e){
-      e.element.removeEventListener(e.type, e.fn, false);
+      if (window.addEventListener) {
+        e.element.removeEventListener(e.type, e.fn, false);
+      } else if (window.attachEvent) {
+        e.element.detachEvent(e.type, e.fn);
+      }
     });
   };
 
