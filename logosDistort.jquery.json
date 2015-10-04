@@ -27,8 +27,11 @@
 	],
 	"licenses": [
 		{
-			"type": "MIT"
+			"type": "MIT",
+			"url": "https://github.com/hellsan631/LogosDistort/blob/master/LICENSE"
 		}
 	],
-	"dependencies": {}
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
 }
