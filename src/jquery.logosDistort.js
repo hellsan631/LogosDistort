@@ -530,6 +530,11 @@
       Math.abs((this.outerConParent.offsetWidth * this.options.outerBuffer) - this.width)
     ) / 2;
 
+    top = (
+      Math.abs(height - this.height) -
+      Math.abs((this.outerConParent.offsetHeight * this.options.outerBuffer) - this.height)
+    ) / 2;
+
     node.setAttribute('style',
       'transform: translate3d(' +
       ' -' + left.toFixed(2)  + 'px, ' +
