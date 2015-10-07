@@ -20,7 +20,7 @@ This plugin allows you to (currently) do full-page 3d perspective transforms bas
 3. Added new mouse movement listeners. [see demo5.html](http://hellsan631.github.io/LogosDistort/demo5.html)
 4. _New Option:_ __perspectiveMulti__
 5. _New Option:_ __depthOverride__
-6. Fixed a few bugs, performance should be more consistant now.
+6. Fixed a few bugs, performance should be more consistent now.
 
 __Note: When 1.0 hits, the file name will drop the jQuery prefix__
 
