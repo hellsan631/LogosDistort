@@ -270,6 +270,7 @@
     var _this = this;
 
     this.paused = false;
+    this.initialized = false;
 
     if (this.has3dSupport) {
       this.drawInterval = setInterval(function() {
@@ -467,9 +468,13 @@
 
     if (element.tagName.toLowerCase() === 'img') {
 
-      doc.addEventListener('DOMContentLoaded', function() {
+      element.onload = function() {
         return _this.calculatePerspective(element);
-      }, false);
+      };
+
+      element.addEventListener('load', function(){
+        return _this.calculatePerspective(element);
+      });
 
       if (element.complete) {
         _this.calculatePerspective(element);
@@ -537,12 +542,35 @@
 
     node.setAttribute('style',
       'transform: translate3d(' +
-      ' -' + left.toFixed(2)  + 'px, ' +
-      ' -' + top.toFixed(2)   + 'px, ' +
+      ' -' + Math.abs(left.toFixed(2))  + 'px, ' +
+      ' -' + Math.abs(top.toFixed(2))   + 'px, ' +
       depth + 'px);' +
       'width: '  + width  + 'px; ' +
       'height: ' + height + 'px; '
     );
+
+    //This is called once we know the element has been loaded, so we can get the correct center of
+    //each element now.
+    if (!this.initialized) {
+      var _this = this;
+
+      setTimeout(function(){
+        _this.initialized = true;
+
+        _this.rect = _this._getBoundingClientRect(_this.element);
+
+        if(_this.rect.width === 0 || _this.rect.height === 0){
+          _this.rect = _this._getBoundingClientRect(_this.container);
+        }
+
+        _this.center  = _this.getCenterOfContainer();
+        _this.effectX = _this.mouseX = _this.center.x;
+        _this.effectY = _this.mouseY = _this.center.y;
+
+        _this.changePerspective(_this.transformTarget, _this.effectX, _this.effectY);
+      }, 10);
+
+    }
   };
 
   Distortion.prototype.getCenterOfContainer = function() {
@@ -589,7 +617,7 @@
   };
 
   Distortion.prototype.resizeHandler = function() {
-    this.rect       = this._getBoundingClientRect(this.element);
+    this.rect       = this._getBoundingClientRect(this.container);
 
     this.width      = this.rect.width;
     this.height     = this.rect.height;
