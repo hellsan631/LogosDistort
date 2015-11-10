@@ -82,6 +82,7 @@
       //bind mouse movement to element
       if (this.elements[0]) {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           _this.elements.forEach(function(ele){
             var fromX = Math.abs(e.x - ele.distort.center.x);
             var fromY = Math.abs(e.y - ele.distort.center.y);
@@ -95,6 +96,7 @@
 
       } else {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           var fromX = Math.abs(e.x - _this.elements.distort.center.x);
           var fromY = Math.abs(e.y - _this.elements.distort.center.y);
 
@@ -110,6 +112,7 @@
       //bind mouse movement to element
       if (this.elements[0]) {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           _this.elements.forEach(function(ele){
             ele.distort.mouseX = e.x;
             ele.distort.mouseY = e.y;
@@ -117,6 +120,7 @@
         });
       } else {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           _this.elements.distort.mouseX = e.x;
           _this.elements.distort.mouseY = e.y;
         });
@@ -127,6 +131,7 @@
       //bind mouse movement to element
       if (this.elements[0]) {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           _this.elements.forEach(function(ele){
             var fromX = Math.abs(e.x - ele.distort.center.x);
             var fromY = Math.abs(e.y - ele.distort.center.y);
@@ -140,6 +145,7 @@
 
       } else {
         this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
           var fromX = Math.abs(e.x - _this.elements.distort.center.x);
           var fromY = Math.abs(e.y - _this.elements.distort.center.y);
 
@@ -175,6 +181,16 @@
     }
   };
 
+  logosDistort.prototype.patchEvent = function(event) {
+    if(!event.x) {
+      event.x = event.clientX || event.layerX;
+    }
+
+    if(!event.y) {
+      event.y = event.clientY || event.layerY;
+    }
+  };
+
   logosDistort.prototype.destroy = function() {
     this.clearEvents();
     this.elements.forEach(function(ele){
@@ -186,6 +202,7 @@
     if (window.addEventListener) {
       element.addEventListener(type, fn, false);
     } else if (window.attachEvent) {
+      console.log('wep');
       element.attachEvent(type, fn);
     }
 
