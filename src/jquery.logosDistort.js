@@ -10,6 +10,8 @@
       throw new Error('No element provided.');
     }
 
+    var _this = this;
+
     this.options = {
       enable: true,
       effectWeight: 1,
@@ -38,11 +40,9 @@
       onResize: function() {}
     };
 
-    this.options.extend(options);
+    extend(_this.options, options);
     this.elements = elements;
     this.eventCache = [];
-
-    var _this = this;
 
     if (this.elements[0]) {
 
@@ -723,13 +723,13 @@
     }
   };
 
-  Object.prototype.extend = function(obj) {
+  function extend(_this, obj) {
     for (var i in obj) {
       if (obj.hasOwnProperty(i)) {
-         this[i] = obj[i];
+         _this[i] = obj[i];
       }
     }
-  };
+  }
 
   // export
   win.logosDistort  = logosDistort;
