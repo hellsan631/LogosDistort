@@ -38,9 +38,10 @@ Or by downloading the repo and using the files there
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	```
 
-2. Include plugin's code:
+2. Include plugin's code: (javascript and stylesheets)
 
 	```html
+	<link href="dist/css/perspectiveRules.css" rel="stylesheet" />
 	<script src="dist/jquery.logosDistort.min.js"></script>
 	```
 

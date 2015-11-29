@@ -1,12 +1,15 @@
 {
 	"name": "LogosDistort",
-	"version": "0.3.7",
+	"version": "0.3.8",
 	"homepage": "https://github.com/hellsan631/LogosDistort",
 	"authors": [
 		"Mathew Kleppin <mathew.kleppin@gmail.com>"
 	],
 	"description": "A simple Javascript plugin that uses matrix3d to perform perspective distortions.",
-	"main": "src/jquery.logosDistort.js",
+	"main": [
+		"dist/jquery.logosDistort.js",
+		"dist/css/perspectiveRules.css"
+	],
   "ignore": [
     ".jshintrc",
     ".editorconfig",
