@@ -12,7 +12,7 @@
     "distortion",
 		"plugins"
 	],
-	"version": "0.3.0",
+	"version": "0.3.4",
 	"author": {
 		"name": "Mathew Kleppin",
 		"email": "mathew.kleppin@gmail.com",
@@ -27,8 +27,11 @@
 	],
 	"licenses": [
 		{
-			"type": "MIT"
+			"type": "MIT",
+			"url": "https://github.com/hellsan631/LogosDistort/blob/master/LICENSE"
 		}
 	],
-	"dependencies": {}
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
 }

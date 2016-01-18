@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/perspectiveRules.css" rel="stylesheet" />
+    <style>
+      body {
+        overflow: hidden;
+      }
+    </style>
 </head>
 <body>
 
@@ -31,7 +36,12 @@
 <script src="assets/js/jquery.particleground.min.js"></script>
 <script src="jquery.logosDistort.js"></script>
 <script>
-    var particles = true;
+    var particles = {
+        dotColor: '#1ec5ee',
+        lineColor: '#0a4e90',
+        density: 20000,
+        parallax: false
+    };
     var particleDensity;
     var options = {
             effectWeight: 1,
@@ -40,14 +50,7 @@
             perspectiveMulti: 1.5,
             enableSmoothing: true,
             onInit: function() {
-              if (particles) {
-                  return $('#particle-target').particleground({
-                      dotColor: '#1ec5ee',
-                      lineColor: '#0a4e90',
-                      density: 20000,
-                      parallax: false
-                  });
-              }
+              $('#particle-target').particleground(particles);
             }
         };
 

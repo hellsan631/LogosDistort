@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.ld-overlap-container {
+  position: absolute;
+}
+
 .ld-smart-container .ld-3d-parent {
   width: 100%;
   height: 100%;
@@ -37,5 +41,5 @@
   transform-style: preserve-3d;
   -webkit-perspective: 1000;
   backface-visibility: hidden;
-  perspective: 1000;
+  perspective: 1000px;
 }

@@ -10,27 +10,7 @@
       throw new Error('No element provided.');
     }
 
-    this.options = options;
-    this.elements = elements;
-
     var _this = this;
-
-    if (this.elements[0]) {
-
-      //Turn our HTMLCollection into an array so we can iterate through it.
-      this.elements = [].slice.call(this.elements);
-
-      this.elements.forEach(function(ele){
-        ele.distort = new Distortion(ele, _this.options);
-      });
-    } else {
-      this.elements.distort = new Distortion(elements, _this.options);
-    }
-  }
-
-  function Distortion(element, options) {
-
-    this._name = 'logosDistort';
 
     this.options = {
       enable: true,
@@ -56,10 +36,194 @@
       },
       beforeInit: function() {},
       onInit: function() {},
-      onDestroy: function() {}
+      onDestroy: function() {},
+      onResize: function() {}
     };
 
-    this.options.extend(options);
+    extend(_this.options, options);
+    this.elements = elements;
+    this.eventCache = [];
+
+    if (this.elements[0]) {
+
+      //Turn our HTMLCollection into an array so we can iterate through it.
+      this.elements = [].slice.call(this.elements);
+
+      this.elements.forEach(function(ele){
+        ele.distort = new Distortion(ele, _this.options);
+      });
+    } else {
+      this.elements.distort = new Distortion(elements, _this.options);
+    }
+
+    this.addHandlers();
+  }
+
+  logosDistort.prototype.addHandlers = function() {
+
+    var _this = this;
+
+    //Add Visable Handler Checks
+    if (window.addEventListener) {
+      this._addEvent(window, 'DOMContentLoaded', visableHandler);
+      this._addEvent(window, 'load', visableHandler);
+      this._addEvent(window, 'scroll', visableHandler);
+      this._addEvent(window, 'resize', visableHandler);
+    } else if (window.attachEvent)  {
+      this._addEvent(window, 'onDOMContentLoaded', visableHandler);
+      this._addEvent(window, 'onload', visableHandler);
+      this._addEvent(window, 'onscroll', visableHandler);
+      this._addEvent(window, 'onresize', visableHandler);
+    }
+
+    //Add Mousemovement Checks
+    if (this.options.mouseMode === 'container') {
+
+      //bind mouse movement to element
+      if (this.elements[0]) {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          _this.elements.forEach(function(ele){
+            var fromX = Math.abs(e.x - ele.distort.center.x);
+            var fromY = Math.abs(e.y - ele.distort.center.y);
+
+            if(fromY < (ele.distort.height/2) && fromX < (ele.distort.width/2)) {
+              ele.distort.mouseX = e.x;
+              ele.distort.mouseY = e.y;
+            }
+          });
+        });
+
+      } else {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          var fromX = Math.abs(e.x - _this.elements.distort.center.x);
+          var fromY = Math.abs(e.y - _this.elements.distort.center.y);
+
+          if(fromY < (_this.elements.distort.height / 2) && fromX < (_this.elements.distort.width / 2)) {
+            _this.elements.distort.mouseX = e.x;
+            _this.elements.distort.mouseY = e.y;
+          }
+        });
+      }
+
+    } else if (this.options.mouseMode === 'window') {
+
+      //bind mouse movement to element
+      if (this.elements[0]) {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          _this.elements.forEach(function(ele){
+            ele.distort.mouseX = e.x;
+            ele.distort.mouseY = e.y;
+          });
+        });
+      } else {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          _this.elements.distort.mouseX = e.x;
+          _this.elements.distort.mouseY = e.y;
+        });
+      }
+
+    } else if (this.options.mouseMode === 'magnetic') {
+
+      //bind mouse movement to element
+      if (this.elements[0]) {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          _this.elements.forEach(function(ele){
+            var fromX = Math.abs(e.x - ele.distort.center.x);
+            var fromY = Math.abs(e.y - ele.distort.center.y);
+
+            if(fromY < (ele.distort.height/2) || fromX < (ele.distort.width/2)) {
+              ele.distort.mouseX = e.x;
+              ele.distort.mouseY = e.y;
+            }
+          });
+        });
+
+      } else {
+        this._addEvent(window, 'mousemove', function(e) {
+          _this.patchEvent(e);
+          var fromX = Math.abs(e.x - _this.elements.distort.center.x);
+          var fromY = Math.abs(e.y - _this.elements.distort.center.y);
+
+          if(fromY < (_this.elements.distort.height/2) || fromX < (_this.elements.distort.width/2)) {
+            _this.elements.distort.mouseX = e.x;
+            _this.elements.distort.mouseY = e.y;
+          }
+        });
+      }
+    }
+
+    //Add resize Handlers for each element
+    if (this.elements[0]) {
+      this._addEvent(window, 'resize', function() {
+        _this.elements.forEach(function(ele){
+          ele.distort.resizeHandler();
+        });
+      });
+    } else {
+      this._addEvent(window, 'resize', function(e) {
+        _this.elements.distort.resizeHandler();
+      });
+    }
+
+    function visableHandler() {
+      if (_this.elements[0]) {
+        _this.elements.forEach(function(ele){
+          ele.distort.detectVisable();
+        });
+      } else {
+        _this.elements.distort.detectVisable();
+      }
+    }
+  };
+
+  logosDistort.prototype.patchEvent = function(event) {
+    if(!event.x) {
+      event.x = event.clientX || event.layerX;
+    }
+
+    if(!event.y) {
+      event.y = event.clientY || event.layerY;
+    }
+  };
+
+  logosDistort.prototype.destroy = function() {
+    this.clearEvents();
+    this.elements.forEach(function(ele){
+      ele.distort.destroy();
+    });
+  };
+
+  logosDistort.prototype._addEvent = function(element, type, fn) {
+    if (window.addEventListener) {
+      element.addEventListener(type, fn, false);
+    } else if (window.attachEvent) {
+      console.log('wep');
+      element.attachEvent(type, fn);
+    }
+
+    this.eventCache.push({element: element, type: type, fn: fn});
+  };
+
+  logosDistort.prototype.clearEvents = function() {
+    this.eventCache.forEach(function(e){
+      if (window.addEventListener) {
+        e.element.removeEventListener(e.type, e.fn, false);
+      } else if (window.attachEvent) {
+        e.element.detachEvent(e.type, e.fn);
+      }
+    });
+  };
+
+  function Distortion(element, options) {
+
+    this._name = 'logosDistort';
+
+    this.options = options;
     this.element = element;
     this.eventCache = [];
 
@@ -72,17 +236,10 @@
 
     this.container  = this.options.container;
 
-    /* Some dom elements dont have offsetWidth (like window), so we fill that in using innerWidth, etc */
-    if (!this.container.offsetWidth) {
-      this.container.offsetWidth = this.container.innerWidth;
-    }
+    this.rect       = this._getBoundingClientRect(this.container);
 
-    if (!this.container.offsetHeight) {
-      this.container.offsetHeight = this.container.innerHeight;
-    }
-
-    this.width      = this.container.offsetWidth;
-    this.height     = this.container.offsetHeight;
+    this.width      = this.rect.width;
+    this.height     = this.rect.height;
     this.center     = this.getCenterOfContainer();
 
     this.outerCon         = null;
@@ -105,64 +262,37 @@
   Distortion.prototype.init = function(){
     var _this = this;
 
-    doc.addEventListener('mouseenter', initMouse, false);
-
     this.createEnvironment();
     this.options.onInit();
 
-
-    if (this.options.mouseMode === 'container') {
-
-      //bind mouse movement to element
-      this._addEvent(this.container, 'mousemove', setMousePos);
-
-    } else if (this.options.mouseMode === 'window') {
-
-      //bind mouse movement to window
-      this._addEvent(window, 'mousemove', setMousePos);
-
-    } else if (this.options.mouseMode === 'magnetic') {
-
-      //bind mouse movement to using the same x and y
-      this._addEvent(window, 'mousemove', function(e){
-        var fromX = Math.abs(e.x - _this.center.x);
-        var fromY = Math.abs(e.y - _this.center.y);
-
-        if(fromY < (_this.height/2) || fromX < (_this.width/2)) {
-          _this.mouseX = e.x;
-          _this.mouseY = e.y;
-        }
-      });
-    }
-
-    this._addEvent(window, 'resize', function(){
-      _this.resizeHandler();
-    });
-
+    this.detectVisable();
     this.start();
+  };
 
-    function setMousePos(e) {
-      _this.mouseX = e.x;
-      _this.mouseY = e.y;
+  Distortion.prototype.detectVisable = function(){
+    this.rect       = this._getBoundingClientRect(this.element);
+
+    if(this.rect.width === 0 || this.rect.height === 0){
+      this.rect = this._getBoundingClientRect(this.container);
     }
 
-    function initMouse(e) {
-      _this.mouseX = e.x;
-      _this.mouseY = e.y;
+    this.width      = this.rect.width;
+    this.height     = this.rect.height;
+    this.center     = this.getCenterOfContainer();
 
-      doc.removeEventListener('mouseenter', initMouse, false);
-    }
+    this.visable    = this._isElementInViewport();
   };
 
   Distortion.prototype.start = function() {
     var _this = this;
 
     this.paused = false;
+    this.initialized = false;
 
     if (this.has3dSupport) {
       this.drawInterval = setInterval(function() {
         _this.draw();
-      }, 15);
+      }, 16);
     }
   };
 
@@ -173,7 +303,9 @@
   };
 
   Distortion.prototype.draw = function() {
-    var _this = this;
+    if (!this.visable) {
+      return;
+    }
 
     if (this.effectX === this.mouseX || this.effectY === this.mouseY) {
       return;
@@ -183,8 +315,8 @@
       this.effectX = this.mouseX;
       this.effectY = this.mouseY;
     } else {
-      this.effectX += (this.mouseX - this.effectX) / (20*this.options.smoothingMultiplier);
-      this.effectY += (this.mouseY - this.effectY) / (20*this.options.smoothingMultiplier);
+      this.effectX += (this.mouseX - this.effectX) / (20 * this.options.smoothingMultiplier);
+      this.effectY += (this.mouseY - this.effectY) / (20 * this.options.smoothingMultiplier);
     }
 
     if (!this.paused) {
@@ -265,11 +397,11 @@
   };
 
   Distortion.prototype.getDistanceFromCenterY = function(appliedX) {
-    return appliedX - this.center.x/2;
+    return appliedX - (this.center.x/2);
   };
 
   Distortion.prototype.getDistanceFromCenterX = function(appliedY) {
-    return appliedY - this.center.y/2;
+    return appliedY - (this.center.y/2);
   };
 
   Distortion.prototype.getDistanceFromEdgeCenterAndCenter = function(fromCenter, fromX, fromY) {
@@ -326,14 +458,17 @@
   };
 
   Distortion.prototype.calculateOuterContainer = function() {
+
     var width   = this.outerConParent.offsetWidth * this.options.outerBuffer;
     var height  = this.outerConParent.offsetHeight * this.options.outerBuffer;
+    var left    = Math.abs((width  - this.width)  /2);
+    var top     = Math.abs((height - this.height) /2);
 
     this.outerCon.setAttribute('style',
       'width:'  + width.toFixed(2)  + 'px; ' +
       'height:' + height.toFixed(2) + 'px; ' +
-      'left: -' + ((width  - this.width)  /2).toFixed(2) + 'px; ' +
-      'top: -'  + ((height - this.height) /2).toFixed(2) + 'px;'
+      'left: -' + left.toFixed(2) + 'px; ' +
+      'top: -'  + top.toFixed(2) + 'px;'
     );
   };
 
@@ -350,9 +485,13 @@
 
     if (element.tagName.toLowerCase() === 'img') {
 
-      doc.addEventListener('DOMContentLoaded', function() {
+      element.onload = function() {
         return _this.calculatePerspective(element);
-      }, false);
+      };
+
+      element.addEventListener('load', function(){
+        return _this.calculatePerspective(element);
+      });
 
       if (element.complete) {
         _this.calculatePerspective(element);
@@ -365,6 +504,8 @@
   Distortion.prototype.calculatePerspective = function(node) {
     var index = Array.prototype.indexOf.call(node.parentNode.childNodes, node);
     var aspect;
+    var left  = 0;
+    var top   = 0;
 
     /*
       If we have a lot of elements in the array, for performance considerations,
@@ -377,16 +518,22 @@
 
     var depth = index * this.options.elementDepth;
 
-    var aspectDevice  = this.getAspectRatio();
-    var aspectElement = this.getAspectRatio(node);
+    if (!node.aspect){
+      var aspectDevice  = this.getAspectRatio();
+      var aspectElement = this.getAspectRatio(node);
 
-    if (isNaN(aspectElement[0]) || node.tagName.toLowerCase() === "div") {
-      aspect = aspectDevice;
+      if (isNaN(aspectElement[0]) || node.tagName.toLowerCase() === "div") {
+        aspect = aspectDevice;
+      } else {
+        aspect = aspectElement;
+      }
+
+      node.aspect = aspect;
     } else {
-      aspect = aspectElement;
+      aspect = node.aspect;
     }
 
-    var height  = (this.outerConParent.offsetHeight*this.options.outerBuffer).toFixed(2);
+    var height  = (this.outerConParent.offsetHeight * this.options.outerBuffer).toFixed(2);
     var width   = (height * aspect[0]).toFixed(2);
 
     /*
@@ -400,23 +547,50 @@
       height      = (height * difference * this.options.outerBuffer).toFixed(2);
     }
 
-    var left  = -((width  - this.width )/2).toFixed(2);
-    var top   = -((height - this.height)/2).toFixed(2);
+    left = (
+      Math.abs(width - this.width) -
+      Math.abs((this.outerConParent.offsetWidth * this.options.outerBuffer) - this.width)
+    ) / 2;
+
+    top = (
+      Math.abs(height - this.height) -
+      Math.abs((this.outerConParent.offsetHeight * this.options.outerBuffer) - this.height)
+    ) / 2;
 
     node.setAttribute('style',
       'transform: translate3d(' +
-      left  + 'px, ' +
-      top   + 'px, ' +
+      ' -' + Math.abs(left.toFixed(2))  + 'px, ' +
+      ' -' + Math.abs(top.toFixed(2))   + 'px, ' +
       depth + 'px);' +
       'width: '  + width  + 'px; ' +
-      'height: ' + height + 'px; ' +
-      'z-index: ' + (index + 1) + ';'
+      'height: ' + height + 'px; '
     );
+
+    //This is called once we know the element has been loaded, so we can get the correct center of
+    //each element now.
+    if (!this.initialized) {
+      var _this = this;
+
+      setTimeout(function(){
+        _this.initialized = true;
+
+        _this.rect = _this._getBoundingClientRect(_this.element);
+
+        if(_this.rect.width === 0 || _this.rect.height === 0){
+          _this.rect = _this._getBoundingClientRect(_this.container);
+        }
+
+        _this.center  = _this.getCenterOfContainer();
+        _this.effectX = _this.mouseX = _this.center.x;
+        _this.effectY = _this.mouseY = _this.center.y;
+
+        _this.changePerspective(_this.transformTarget, _this.effectX, _this.effectY);
+      }, 10);
+
+    }
   };
 
   Distortion.prototype.getCenterOfContainer = function() {
-    this.rect = this.element.getBoundingClientRect();
-
     return {
       x: this.rect.left + (this.width/2),
       y: this.rect.top + (this.height/2),
@@ -430,10 +604,27 @@
       ele = this.options.container;
     }
 
+    var rect = this._getBoundingClientRect(ele);
+
     return [
-      ele.offsetWidth  / ele.offsetHeight,
-      ele.offsetHeight / ele.offsetWidth
+      rect.width  / rect.height,
+      rect.height / rect.width
     ];
+  };
+
+  Distortion.prototype._getBoundingClientRect = function (ele) {
+    if (!ele.getBoundingClientRect) {
+      return {
+        top: 0,
+        bottom: window.innerHeight,
+        left: 0,
+        right: window.innerWidth,
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+    } else {
+       return ele.getBoundingClientRect();
+    }
   };
 
   Distortion.prototype.getDistance2d = function (currX, currY, targetX, targetY) {
@@ -443,29 +634,16 @@
   };
 
   Distortion.prototype.resizeHandler = function() {
+    this.rect       = this._getBoundingClientRect(this.container);
 
-    if(this.container.innerWidth && this.container.innerWidth !== this.container.offsetWidth) {
-      this.container.offsetWidth = null;
-    }
-
-    if(this.container.innerHeight && this.container.innerHeight !== this.container.offsetHeight) {
-      this.container.offsetHeight = null;
-    }
-
-    if (!this.container.offsetWidth) {
-      this.container.offsetWidth = this.container.innerWidth;
-    }
-
-    if (!this.container.offsetHeight) {
-      this.container.offsetHeight = this.container.innerHeight;
-    }
-
-    this.width      = this.container.offsetWidth;
-    this.height     = this.container.offsetHeight;
+    this.width      = this.rect.width;
+    this.height     = this.rect.height;
     this.center     = this.getCenterOfContainer();
 
     this.calculateOuterContainer();
     this.calculate3dObjects();
+
+    this.options.onResize();
   };
 
   Distortion.prototype._has3d = function(){
@@ -500,15 +678,32 @@
     }
   };
 
+  Distortion.prototype._isElementInViewport = function() {
+    return (
+        this.rect.bottom  >= 0 &&
+        this.rect.right   >= 0 &&
+        this.rect.top   <= window.innerHeight &&
+        this.rect.left  <= window.innerWidth
+    );
+  };
+
   Distortion.prototype._addEvent = function(element, type, fn) {
-    element.addEventListener(type, fn, false);
+    if (window.addEventListener) {
+      element.addEventListener(type, fn, false);
+    } else if (window.attachEvent) {
+      element.attachEvent(type, fn);
+    }
 
     this.eventCache.push({element: element, type: type, fn: fn});
   };
 
   Distortion.prototype.clearEvents = function() {
     this.eventCache.forEach(function(e){
-      e.element.removeEventListener(e.type, e.fn, false);
+      if (window.addEventListener) {
+        e.element.removeEventListener(e.type, e.fn, false);
+      } else if (window.attachEvent) {
+        e.element.detachEvent(e.type, e.fn);
+      }
     });
   };
 
@@ -528,13 +723,13 @@
     }
   };
 
-  Object.prototype.extend = function(obj) {
+  function extend(_this, obj) {
     for (var i in obj) {
       if (obj.hasOwnProperty(i)) {
-         this[i] = obj[i];
+         _this[i] = obj[i];
       }
     }
-  };
+  }
 
   // export
   win.logosDistort  = logosDistort;
