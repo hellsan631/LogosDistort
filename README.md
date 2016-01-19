@@ -1,4 +1,5 @@
 # Advanced 3d Perspective Distortion
+## Enhanced by [BrowserStack](http://browserstack.com/)
 
 [![License](http://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
