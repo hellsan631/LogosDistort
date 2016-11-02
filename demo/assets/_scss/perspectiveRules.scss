@@ -9,9 +9,13 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    transform-style: preserve-3d;
-    perspective: 9000px;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-perspective: 9000px;
+            perspective: 9000px;
     opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    position: relative;
   }
 
   .ld-transform-target{
@@ -22,7 +26,8 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   .ld-3d-object{
@@ -31,9 +36,11 @@
     -webkit-transform-style: flat;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translate3d(0px, 0px, 0px);
-    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
     -webkit-perspective: 1000;
     backface-visibility: hidden;
-    perspective: 1000;
+    -webkit-perspective: 1000px;
+            perspective: 1000px;
   }
 }
